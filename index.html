@@ -1483,19 +1483,27 @@
     }
 
     /* =========================================================
-       10. ABOUT SECTION
+       10. ABOUT SECTION & EXECUTIVE PROFILE PORTRAIT
        ========================================================= */
-    .about-grid {
+    .about-top-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 32px;
-      align-items: start;
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 24px;
     }
 
     @media (min-width: 1024px) {
-      .about-grid {
-        grid-template-columns: 1.15fr 0.85fr;
+      .about-top-grid {
+        grid-template-columns: 1.25fr 0.85fr;
+        gap: 32px;
       }
+    }
+
+    .about-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .about-text {
@@ -1504,22 +1512,220 @@
       margin: 0 0 16px;
     }
 
-    .edu-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-top: 22px;
+    .about-text:last-child {
+      margin-bottom: 0;
     }
 
-    @media (min-width: 640px) {
-      .edu-grid {
-        grid-template-columns: 1fr 1fr;
+    /* Executive Portrait Card in About Section (Top Right) */
+    .about-profile-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 24px;
+      background: linear-gradient(145deg, var(--bg-surface), var(--bg-elevated));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      box-shadow: var(--shadow-glow);
+      height: 100%;
+    }
+
+    .about-profile-top {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .about-avatar-wrap {
+      position: relative;
+      width: 112px;
+      height: 112px;
+      border-radius: 18px;
+      padding: 3px;
+      background: linear-gradient(135deg, #38BDF8, #2563EB, #10B981);
+      flex-shrink: 0;
+      box-shadow: 0 10px 24px -6px rgba(37, 99, 235, 0.45);
+    }
+
+    .about-avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      background: var(--bg-surface-alt);
+    }
+
+    .about-avatar-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      background: var(--bg-surface-alt);
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--accent-sky);
+      font-weight: 800;
+      font-size: 1.55rem;
+      letter-spacing: -0.02em;
+    }
+
+    .about-avatar-fallback span {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .about-avatar-status {
+      position: absolute;
+      right: -4px;
+      bottom: -4px;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-emerald);
+      border: 3px solid var(--bg-surface);
+    }
+
+    .about-profile-info {
+      min-width: 0;
+    }
+
+    .about-profile-name {
+      margin: 0;
+      font-size: 1.18rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .about-profile-role {
+      margin: 4px 0 10px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--accent-sky);
+      line-height: 1.4;
+    }
+
+    html[data-theme="light"] .about-profile-role {
+      color: var(--accent-blue);
+    }
+
+    .about-profile-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .about-profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .about-stat-box {
+      padding: 10px 8px;
+      border-radius: 10px;
+      background: var(--bg-surface-alt);
+      border: 1px solid var(--border-subtle);
+      text-align: center;
+    }
+
+    .about-stat-val {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+
+    .about-stat-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 480px) {
+      .about-profile-top {
+        flex-direction: column;
+        text-align: center;
       }
+      .about-profile-meta {
+        justify-content: center;
+      }
+    }
+
+    /* Bottom 3-Column Balanced Bento Grid */
+    .about-bento-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    @media (min-width: 768px) {
+      .about-bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .about-bento-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .about-bento-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .about-bento-title {
+      margin: 0 0 14px;
+      font-size: 1.02rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .edu-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .edu-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: var(--bg-surface-alt);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .edu-item h4 {
+      margin: 3px 0 2px;
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .edu-item p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .checklist {
       list-style: none;
-      margin: 14px 0 0;
+      margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
@@ -1530,12 +1736,13 @@
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       color: var(--text-secondary);
+      line-height: 1.5;
     }
 
     .lang-bar-wrap {
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .lang-bar-wrap:last-child {
@@ -1547,7 +1754,7 @@
       justify-content: space-between;
       font-size: 0.82rem;
       font-weight: 600;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .progress-track {
@@ -3039,43 +3246,107 @@
     <!-- ==================== 7. ABOUT & INTERACTIVE FAQ ACCORDION ==================== -->
     <section id="about" class="section section-alt">
       <div class="container">
-        <div class="about-grid">
-          <div>
+        <!-- Top Row: Executive Bio (Left) + Profile Portrait Card (Right) -->
+        <div class="about-top-grid">
+          <div class="about-intro">
             <span class="eyebrow">About S M Jobaer Alam</span>
-            <h2 class="section-title" style="margin-bottom:18px;">16+ Years of Hands-On Cloud, Security &amp; Infrastructure Leadership</h2>
+            <h2 class="section-title" style="margin-bottom:16px;">16+ Years of Hands-On Cloud, Security &amp; Infrastructure Leadership</h2>
             <p class="about-text">
               I am a Microsoft infrastructure, cloud, and cybersecurity specialist who bridges executive architecture with dependable hands-on delivery. Over 16+ years—including managing 37 nationwide telecom branches and leading multinational cloud security operations—I have focused on Zero Trust identity, resilient hybrid networking, clean PowerShell automation, and audit-ready ISO 27001 governance.
             </p>
             <p class="about-text">
               With fluent C1 English communication, clear SOP documentation, and a root-cause problem-solving mindset, I integrate smoothly into US remote teams, onsite enterprise environments, Europe-facing engagements, and high-trust freelance consulting projects.
             </p>
+          </div>
 
-            <div class="edu-grid">
-              <div class="card">
-                <div class="cert-meta">Bachelor's Degree</div>
-                <h3 style="margin:4px 0; font-size:0.98rem;">BSc in Computer Science</h3>
-                <p style="margin:0; font-size:0.82rem; color:var(--text-muted);">University of South Asia &bull; Dhaka, Bangladesh</p>
+          <!-- === SECTION: PROFILE_PHOTO === -->
+          <!-- Upload your photo to your GitHub repo at: images/profile.jpg -->
+          <div class="card about-profile-card">
+            <div class="about-profile-top">
+              <div class="about-avatar-wrap">
+                <img
+                  id="about-profile-photo"
+                  src="images/profile.jpg"
+                  alt="S M Jobaer Alam — Microsoft 365 & Cloud Engineer | Microsoft Security Specialist"
+                  class="about-avatar-img"
+                  loading="lazy"
+                />
+                <div id="about-profile-fallback" class="about-avatar-fallback" aria-hidden="true">
+                  JA
+                  <span>Add Photo</span>
+                </div>
+                <span class="about-avatar-status" title="Available for US Remote, On-Premises & Freelance"></span>
               </div>
-              <div class="card">
-                <div class="cert-meta">Engineering Diploma</div>
-                <h3 style="margin:4px 0; font-size:0.98rem;">Diploma in Computer Science &amp; Eng.</h3>
-                <p style="margin:0; font-size:0.82rem; color:var(--text-muted);">Patuakhali Polytechnic Institute &bull; Bangladesh</p>
+              <div class="about-profile-info">
+                <h3 class="about-profile-name">S M Jobaer Alam</h3>
+                <p class="about-profile-role">Microsoft 365 &amp; Cloud Engineer &bull; Microsoft Security Specialist</p>
+                <div class="about-profile-meta">
+                  <span class="tag">Dhaka, BD</span>
+                  <span class="tag">US Remote &amp; Onsite Ready</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-profile-stats">
+              <div class="about-stat-box">
+                <div class="about-stat-val">16+ Yrs</div>
+                <div class="about-stat-lbl">Enterprise IT</div>
+              </div>
+              <div class="about-stat-box">
+                <div class="about-stat-val">37 Sites</div>
+                <div class="about-stat-lbl">Multi-Branch</div>
+              </div>
+              <div class="about-stat-box">
+                <div class="about-stat-val">7+ Certs</div>
+                <div class="about-stat-lbl">MS &amp; AWS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Row: 3 Equal-Height Executive Cards -->
+        <div class="about-bento-grid">
+          <div class="card about-bento-card">
+            <div>
+              <h3 class="about-bento-title">
+                <svg class="icon" style="color:var(--accent-sky);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                Education &amp; Qualifications
+              </h3>
+              <div class="edu-stack">
+                <div class="edu-item">
+                  <div class="cert-meta">Bachelor's Degree</div>
+                  <h4>BSc in Computer Science</h4>
+                  <p>University of South Asia &bull; Dhaka, Bangladesh</p>
+                </div>
+                <div class="edu-item">
+                  <div class="cert-meta">Engineering Diploma</div>
+                  <h4>Diploma in Computer Science &amp; Eng.</h4>
+                  <p>Patuakhali Polytechnic Institute &bull; Bangladesh</p>
+                </div>
               </div>
             </div>
           </div>
 
-          <div style="display:flex; flex-direction:column; gap:18px;">
-            <div class="card">
-              <h3 style="margin:0; font-size:1.02rem;">US, UK &amp; EU Remote Readiness</h3>
+          <div class="card about-bento-card">
+            <div>
+              <h3 class="about-bento-title">
+                <svg class="icon" style="color:var(--accent-emerald);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                US, UK &amp; EU Remote Readiness
+              </h3>
               <ul class="checklist">
                 <li><span style="color:var(--accent-emerald); font-weight:800;">&#10003;</span><span><strong>Dedicated Home Office:</strong> Quiet executive workspace ready for daily standups, architecture reviews, and secure operations.</span></li>
                 <li><span style="color:var(--accent-emerald); font-weight:800;">&#10003;</span><span><strong>Fiber Broadband &amp; Backup Power:</strong> Redundant high-speed internet and continuous UPS/IPS power backup for uninterrupted coverage.</span></li>
                 <li><span style="color:var(--accent-emerald); font-weight:800;">&#10003;</span><span><strong>Flexible Engagement:</strong> Ready for US Eastern/Pacific overlap, UK/EU business hours, US relocation/on-premises, and Dhaka onsite work.</span></li>
               </ul>
             </div>
+          </div>
 
-            <div class="card">
-              <h3 style="margin:0 0 14px; font-size:1.02rem;">Languages &amp; Communication</h3>
+          <div class="card about-bento-card">
+            <div>
+              <h3 class="about-bento-title">
+                <svg class="icon" style="color:var(--accent-indigo);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Languages &amp; Communication
+              </h3>
               <div class="lang-bar-wrap">
                 <div class="lang-row"><span>English (C1 — Fluent Written &amp; Spoken)</span><span style="color:var(--accent-sky);">95%</span></div>
                 <div class="progress-track"><div class="progress-fill" style="width:95%;"></div></div>
@@ -3089,6 +3360,9 @@
                 <div class="progress-track"><div class="progress-fill" style="width:70%; background:#64748B;"></div></div>
               </div>
             </div>
+            <p style="margin:14px 0 0; padding-top:12px; border-top:1px solid var(--border-subtle); font-size:0.78rem; color:var(--text-muted);">
+              Clear executive reporting, SOP documentation, and cross-functional training for global teams.
+            </p>
           </div>
         </div>
       </div>
@@ -3340,7 +3614,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>&copy; <span id="footer-year">2030</span> S M Jobaer Alam (www.jobaeralam.com). All rights reserved.</span>
+        <span>&copy; <span id="footer-year">2026</span> S M Jobaer Alam (www.jobaeralam.com). All rights reserved.</span>
         <span>Microsoft 365 &amp; Cloud Engineer | Microsoft Security Specialist</span>
       </div>
     </div>
@@ -3801,6 +4075,7 @@
           initFooterYear,
           initTheme,
           initMobileMenu,
+          initProfilePhoto,
           initCopyButtons,
           initLiveClocks,
           initExpertiseFilter,
@@ -3894,6 +4169,36 @@
             links[i].addEventListener('click', function () {
               setOpen(false);
             });
+          }
+        }
+
+        /* ---------------------------------------------------------
+           3B. PROFILE PHOTO FALLBACK HANDLER (images/profile.jpg)
+           --------------------------------------------------------- */
+        function initProfilePhoto() {
+          var img = document.getElementById('about-profile-photo');
+          var fallback = document.getElementById('about-profile-fallback');
+          if (!img || !fallback) return;
+
+          function showFallback() {
+            img.style.display = 'none';
+            fallback.style.display = 'flex';
+          }
+
+          function showImage() {
+            img.style.display = 'block';
+            fallback.style.display = 'none';
+          }
+
+          img.addEventListener('error', showFallback);
+          img.addEventListener('load', function () {
+            if (img.naturalWidth > 0) showImage();
+            else showFallback();
+          });
+
+          if (img.complete) {
+            if (img.naturalWidth === 0) showFallback();
+            else showImage();
           }
         }
 
@@ -4934,7 +5239,7 @@
             'IT Manager | MobiTeam Bangladesh Ltd., Dhaka (Mar 2018 – May 2023)',
             '- Managed servers, networks, firewalls, cloud services, domains/DNS, official email, ISO 27001 policies, DR/BCP plans, ERP/CRM/HR/Accounts integration, and vendor contracts.',
             '',
-            'Senior System Administrator | Orasinvest Bangladesh Ltd., Dhaka (Mar 2012 – May 2018)',
+            'Senior System Administrator | Orasinvest Bangladesh Ltd., Dhaka (37 Branch Locations) (Mar 2012 – May 2018)',
             '- Administered enterprise IT across 37 nationwide telecom branches: Windows Server, Linux, AD/DNS/DHCP/GPO, Hyper-V/VMware, M365/Exchange, FortiGate VPNs, branch WANs, IP PABX, ITIL operations, and PowerShell/Bash automation.',
             '',
             'IT Support Engineer | Computer Recherche Center & RNKASS Ltd., Dhaka (Apr 2010 – Mar 2012)',
