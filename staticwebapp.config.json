@@ -1,0 +1,15 @@
+{
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": [
+      "/images/*",
+      "/downloads/*",
+      "/*.{ico,png,jpg,jpeg,webp,svg,css,js,zip,json,txt}"
+    ]
+  },
+  "mimeTypes": {
+    ".zip": "application/zip",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml"
+  }
+}
