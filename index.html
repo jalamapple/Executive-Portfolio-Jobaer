@@ -8,23 +8,30 @@
   <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23070D19'/%3E%3Ctext x='24' y='31' text-anchor='middle' fill='%2338BDF8' font-family='Arial,sans-serif' font-size='20' font-weight='800'%3EJA%3C/text%3E%3C/svg%3E" />
   <meta name="description" content="Executive portfolio of S M Jobaer Alam (www.jobaeralam.com) — Microsoft 365 & Cloud Engineer | Microsoft Security Specialist with 16+ years of enterprise experience. Available for US Remote, On-Premises, and Global Freelance engagements, plus free IT & Cloud tools." />
   <style>
+    /* =========================================================
+       1. DESIGN TOKENS & THEME VARIABLES (DARK DEFAULT + LIGHT)
+       ========================================================= */
     :root {
       --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace;
+
       --radius-sm: 8px;
       --radius-md: 12px;
       --radius-lg: 16px;
       --radius-xl: 22px;
       --radius-pill: 9999px;
+
       --accent-blue: #2563EB;
       --accent-sky: #38BDF8;
       --accent-emerald: #10B981;
       --accent-amber: #F59E0B;
       --accent-indigo: #6366F1;
       --accent-rose: #F43F5E;
+
       --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       --container-max: 1200px;
     }
+
     html[data-theme="dark"] {
       --bg-body: #070D19;
       --bg-surface: #0F172A;
@@ -51,6 +58,7 @@
       --badge-indigo-bg: rgba(99, 102, 241, 0.16);
       --badge-indigo-text: #A5B4FC;
     }
+
     html[data-theme="light"] {
       --bg-body: #F8FAFC;
       --bg-surface: #FFFFFF;
@@ -77,9 +85,11 @@
       --badge-indigo-bg: rgba(99, 102, 241, 0.12);
       --badge-indigo-text: #4338CA;
     }
+
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     section[id], main[id] { scroll-margin-top: 84px; }
+
     body {
       margin: 0;
       font-family: var(--font-sans);
@@ -90,6 +100,7 @@
       overflow-x: hidden;
       transition: background-color 0.25s ease, color 0.25s ease;
     }
+
     a { color: inherit; text-decoration: none; }
     button, input, select, textarea { font-family: inherit; }
     button { cursor: pointer; }
@@ -98,27 +109,110 @@
     .icon-sm { width: 15px; height: 15px; }
     .icon-lg { width: 22px; height: 22px; }
 
-    .site-header { position: sticky; top: 0; z-index: 50; background: var(--bg-header); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-subtle); }
-    .header-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; gap: 16px; }
+    /* =========================================================
+       3. STICKY GLASSMORPHIC NAVBAR & MOBILE DRAWER
+       ========================================================= */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--bg-header);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+      gap: 16px;
+    }
+
     .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .brand-logo { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(37, 99, 235, 0.22)); border: 1px solid rgba(56, 189, 248, 0.35); flex-shrink: 0; transition: transform var(--transition), border-color var(--transition); }
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(37, 99, 235, 0.22));
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      flex-shrink: 0;
+      transition: transform var(--transition), border-color var(--transition);
+    }
     .brand:hover .brand-logo { transform: translateY(-1px); border-color: var(--accent-sky); }
     .brand-text { display: flex; flex-direction: column; min-width: 0; }
     .brand-name { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); line-height: 1.2; white-space: nowrap; }
     .brand-domain { font-size: 0.76rem; font-weight: 600; color: var(--accent-sky); letter-spacing: 0.01em; }
     html[data-theme="light"] .brand-domain { color: var(--accent-blue); }
+
     .nav-desktop { display: none; align-items: center; gap: 6px; }
-    .nav-desktop a { position: relative; padding: 7px 12px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); border: 1px solid transparent; transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease; }
-    .nav-desktop a::after { content: ""; position: absolute; left: 12px; right: 12px; bottom: 3px; height: 2px; border-radius: 999px; background: linear-gradient(90deg, var(--accent-sky), var(--accent-blue)); transform: scaleX(0); opacity: 0; transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease; }
+    .nav-desktop a {
+      position: relative;
+      padding: 7px 12px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border: 1px solid transparent;
+      transition: color 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+    }
+    .nav-desktop a::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 3px;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-sky), var(--accent-blue));
+      transform: scaleX(0);
+      opacity: 0;
+      transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+    }
     .nav-desktop a:hover { color: var(--accent-sky); background: rgba(56, 189, 248, 0.08); transform: translateY(-1px); }
     html[data-theme="light"] .nav-desktop a:hover { color: var(--accent-blue); background: rgba(37, 99, 235, 0.08); }
-    .nav-desktop a.nav-active { color: var(--badge-blue-text); background: var(--badge-blue-bg); border-color: rgba(56, 189, 248, 0.4); transform: translateY(-2px) scale(1.05); box-shadow: 0 8px 18px -6px rgba(37, 99, 235, 0.45); }
+    .nav-desktop a.nav-active {
+      color: var(--badge-blue-text);
+      background: var(--badge-blue-bg);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 8px 18px -6px rgba(37, 99, 235, 0.45);
+    }
     .nav-desktop a.nav-active::after { transform: scaleX(1); opacity: 1; }
     html[data-theme="light"] .nav-desktop a.nav-active { border-color: rgba(37, 99, 235, 0.35); box-shadow: 0 8px 16px -6px rgba(37, 99, 235, 0.24); }
+
     .header-actions { display: flex; align-items: center; gap: 10px; }
-    .icon-btn { width: 40px; height: 40px; border-radius: 11px; border: 1px solid var(--border-strong); background: var(--bg-surface); color: var(--text-primary); display: inline-flex; align-items: center; justify-content: center; transition: border-color var(--transition), transform var(--transition), background var(--transition); }
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 11px;
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color var(--transition), transform var(--transition), background var(--transition);
+    }
     .icon-btn:hover { border-color: var(--accent-sky); transform: translateY(-1px); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-size: 0.88rem; font-weight: 600; border: 1px solid transparent; transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition); white-space: nowrap; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+      white-space: nowrap;
+    }
     .btn:active { transform: scale(0.98); }
     .btn:disabled { opacity: 0.65; cursor: not-allowed; transform: none !important; }
     .btn-primary { background: linear-gradient(135deg, #0EA5E9, #2563EB); color: #FFFFFF; box-shadow: 0 8px 20px -4px rgba(37, 99, 235, 0.4); }
@@ -130,30 +224,58 @@
     .btn-subtle { background: var(--bg-surface-alt); color: var(--text-primary); border-color: var(--border-subtle); }
     .btn-subtle:hover { border-color: var(--accent-sky); }
     .btn-sm { padding: 8px 13px; font-size: 0.8rem; border-radius: 10px; }
+
     .header-resume-btn { display: none; }
     .mobile-menu-btn { display: inline-flex; }
     .mobile-drawer { display: none; border-top: 1px solid var(--border-subtle); background: var(--bg-surface); padding: 14px 20px 20px; box-shadow: var(--shadow-lg); }
     .mobile-drawer.open { display: block; }
+    .mobile-nav-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
     .mobile-nav-list a { padding: 11px 14px; border-radius: 10px; font-size: 0.94rem; font-weight: 600; color: var(--text-secondary); border: 1px solid transparent; transition: all 0.22s ease; }
     .mobile-nav-list a:hover { background: var(--bg-surface-alt); color: var(--text-primary); }
     .mobile-nav-list a.nav-active { background: var(--badge-blue-bg); color: var(--badge-blue-text); border-color: rgba(56, 189, 248, 0.35); transform: translateX(4px); }
+
     @media (min-width: 640px) { .header-resume-btn { display: inline-flex; } }
     @media (min-width: 1080px) { .nav-desktop { display: flex; } .mobile-menu-btn { display: none; } .mobile-drawer { display: none !important; } }
 
-    .hero { position: relative; padding: 52px 0 68px; border-bottom: 1px solid var(--border-subtle); background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.2px); background-size: 28px 28px; overflow: hidden; }
+    /* =========================================================
+       4. HERO SECTION & LIVE TIME ZONE WIDGET
+       ========================================================= */
+    .hero {
+      position: relative;
+      padding: 52px 0 68px;
+      border-bottom: 1px solid var(--border-subtle);
+      background-image: radial-gradient(var(--grid-dot) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+      overflow: hidden;
+    }
     .hero-glow-1, .hero-glow-2 { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
     .hero-glow-1 { width: 420px; height: 420px; top: -140px; left: 12%; background: rgba(14, 165, 233, 0.16); }
     .hero-glow-2 { width: 340px; height: 340px; bottom: -80px; right: 10%; background: rgba(16, 185, 129, 0.12); }
     .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: 36px; align-items: center; }
     @media (min-width: 1024px) { .hero { padding: 68px 0 82px; } .hero-grid { grid-template-columns: 1.25fr 0.95fr; gap: 40px; } }
-    .availability-pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px; border-radius: var(--radius-pill); background: var(--badge-emerald-bg); border: 1px solid rgba(16, 185, 129, 0.35); color: var(--badge-emerald-text); font-size: 0.8rem; font-weight: 700; margin-bottom: 18px; }
+
+    .availability-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 7px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--badge-emerald-bg);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--badge-emerald-text);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
     .pulse-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-emerald); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); animation: pulse-ring 2s infinite; flex-shrink: 0; }
     @keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.65); } 70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); } 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+
     .hero-title { margin: 0; font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.03em; }
     .hero-title-gradient { display: block; margin-top: 6px; background: linear-gradient(90deg, #38BDF8, #2563EB, #10B981); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .hero-subtitle { margin: 18px 0 26px; font-size: 1.03rem; color: var(--text-secondary); max-width: 630px; }
     .hero-subtitle strong { color: var(--text-primary); }
     .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+
     .tz-card { background: var(--bg-surface); border: 1px solid var(--border-strong); border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow-glow); }
     .tz-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); }
     .tz-title-wrap { display: flex; align-items: center; gap: 12px; }
@@ -172,6 +294,7 @@
     .tz-date { font-size: 0.72rem; color: var(--text-muted); text-align: right; }
     .quick-email-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; border-radius: 12px; background: var(--bg-input); border: 1px solid var(--border-subtle); }
     .quick-email-text { display: flex; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 600; color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
     .metrics-strip { position: relative; z-index: 1; margin-top: 44px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
     @media (min-width: 900px) { .metrics-strip { grid-template-columns: repeat(4, 1fr); } }
     .metric-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 18px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm); }
@@ -179,6 +302,9 @@
     .metric-val { font-size: 1.35rem; font-weight: 800; line-height: 1.15; }
     .metric-lbl { font-size: 0.78rem; color: var(--text-muted); font-weight: 500; margin-top: 2px; }
 
+    /* =========================================================
+       5. SHARED SECTION HEADERS & CARDS
+       ========================================================= */
     .section { padding: 76px 0; }
     .section-alt { background: var(--bg-surface-alt); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); }
     .section-header { max-width: 740px; margin-bottom: 36px; }
@@ -190,6 +316,9 @@
     .card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-sm); transition: border-color var(--transition), transform var(--transition); }
     .card:hover { border-color: rgba(56, 189, 248, 0.45); }
 
+    /* =========================================================
+       6. EXPERTISE & CERTIFICATIONS
+       ========================================================= */
     .filter-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
     .filter-tab { padding: 9px 15px; border-radius: 11px; font-size: 0.82rem; font-weight: 600; background: var(--bg-surface); color: var(--text-secondary); border: 1px solid var(--border-strong); transition: all var(--transition); }
     .filter-tab:hover { border-color: var(--accent-sky); color: var(--text-primary); }
@@ -203,6 +332,7 @@
     .skill-card p { margin: 0 0 14px; font-size: 0.84rem; color: var(--text-muted); }
     .tag-list { display: flex; flex-wrap: wrap; gap: 7px; }
     .tag { padding: 5px 10px; border-radius: 8px; font-size: 0.76rem; font-weight: 600; background: var(--chip-bg); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+
     .certs-panel { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 28px; box-shadow: var(--shadow-sm); }
     .certs-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 22px; }
     .certs-head h3 { margin: 0; font-size: 1.25rem; font-weight: 800; display: flex; align-items: center; gap: 10px; }
@@ -215,6 +345,9 @@
     .cert-name { margin: 3px 0 4px; font-size: 0.9rem; font-weight: 700; line-height: 1.3; }
     .cert-code { font-size: 0.78rem; color: var(--text-muted); }
 
+    /* =========================================================
+       7. EXPANDABLE EXPERIENCE TIMELINE
+       ========================================================= */
     .section-row-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 32px; }
     .timeline { display: flex; flex-direction: column; gap: 16px; }
     .exp-card { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
@@ -233,6 +366,9 @@
     .exp-bullets li { position: relative; padding-left: 20px; font-size: 0.88rem; color: var(--text-secondary); }
     .exp-bullets li::before { content: ""; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-sky); }
 
+    /* =========================================================
+       8. CASE STUDIES & FREE TOOLS HUB
+       ========================================================= */
     .cases-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
     @media (min-width: 768px) { .cases-grid { grid-template-columns: repeat(2, 1fr); } }
     .case-card { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; cursor: pointer; }
@@ -262,6 +398,9 @@
     .tools-cta-banner { margin-top: 28px; padding: 22px 24px; border-radius: var(--radius-lg); background: var(--bg-surface); border: 1px solid rgba(56, 189, 248, 0.32); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
     .sha-code { display: block; margin-top: 6px; padding: 10px 12px; border-radius: 9px; background: var(--bg-input); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.76rem; word-break: break-all; color: var(--accent-sky); }
 
+    /* =========================================================
+       9. SMART FREELANCE & HIRING HUB ("HIRE ME")
+       ========================================================= */
     .platforms-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 30px; }
     @media (min-width: 640px) { .platforms-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .platforms-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -271,6 +410,7 @@
     .platform-badge { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.84rem; flex-shrink: 0; }
     .platform-name { font-size: 0.92rem; font-weight: 700; }
     .platform-sub { font-size: 0.76rem; color: var(--text-muted); }
+
     .builder-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 1024px) { .builder-grid { grid-template-columns: 1.25fr 0.95fr; } }
     .builder-step { margin-bottom: 22px; }
@@ -286,6 +426,9 @@
     .brief-actions { display: flex; flex-direction: column; gap: 10px; }
     .brief-actions-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
+    /* =========================================================
+       10. ABOUT SECTION & EXECUTIVE PROFILE PORTRAIT
+       ========================================================= */
     .about-top-grid { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: stretch; margin-bottom: 24px; }
     @media (min-width: 1024px) { .about-top-grid { grid-template-columns: 1.25fr 0.85fr; gap: 32px; } }
     .about-intro { display: flex; flex-direction: column; justify-content: center; }
@@ -308,6 +451,7 @@
     .about-stat-val { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; }
     .about-stat-lbl { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; font-weight: 600; }
     @media (max-width: 480px) { .about-profile-top { flex-direction: column; text-align: center; } .about-profile-meta { justify-content: center; } }
+
     .about-bento-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: stretch; }
     @media (min-width: 768px) { .about-bento-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (min-width: 1024px) { .about-bento-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -325,6 +469,9 @@
     .progress-track { height: 8px; border-radius: var(--radius-pill); background: var(--bg-surface-alt); overflow: hidden; }
     .progress-fill { height: 100%; border-radius: var(--radius-pill); background: linear-gradient(90deg, #0EA5E9, #2563EB); }
 
+    /* =========================================================
+       11. FAQ ACCORDION & CONTACT SECTION
+       ========================================================= */
     .faq-list { max-width: 840px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
     .faq-item { background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; overflow: hidden; }
     .faq-trigger { width: 100%; background: transparent; border: none; color: var(--text-primary); text-align: left; padding: 18px 22px; font-size: 0.96rem; font-weight: 700; display: flex; align-items: center; justify-content: space-between; gap: 14px; }
@@ -341,6 +488,7 @@
     .channel-icon { width: 42px; height: 42px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .channel-label { font-size: 0.74rem; color: var(--text-muted); font-weight: 600; }
     .channel-value { font-size: 0.9rem; font-weight: 700; word-break: break-word; }
+
     .form-row-2 { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 16px; }
     @media (min-width: 640px) { .form-row-2 { grid-template-columns: 1fr 1fr; } }
     .form-group { margin-bottom: 16px; }
@@ -357,6 +505,7 @@
     .suggestion-chip.featured:hover, .suggestion-chip.featured.active { border-color: var(--accent-sky); background: var(--accent-blue); color: #FFFFFF; }
     .form-actions { display: flex; flex-wrap: wrap; gap: 10px; }
     .form-actions .btn-grow { flex: 1 1 200px; }
+
     .status-banner { display: none; margin-top: 16px; padding: 14px 16px; border-radius: 12px; font-size: 0.86rem; line-height: 1.5; border: 1px solid var(--border-strong); }
     .status-banner.show { display: block; }
     .status-banner.status-success { background: var(--badge-emerald-bg); border-color: rgba(16, 185, 129, 0.45); color: var(--text-primary); }
@@ -370,11 +519,15 @@
     .webmail-quick-row { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border-subtle); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; font-size: 0.8rem; color: var(--text-muted); }
     .webmail-quick-actions { display: flex; flex-wrap: wrap; gap: 8px; }
 
+    /* =========================================================
+       12. FOOTER, WHATSAPP WIDGET, MODALS & TOAST
+       ========================================================= */
     .site-footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 40px 0 32px; }
     .footer-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 24px; border-bottom: 1px solid var(--border-subtle); }
     .footer-links { display: flex; flex-wrap: wrap; gap: 18px; font-size: 0.84rem; font-weight: 600; color: var(--text-muted); }
     .footer-links a:hover, .footer-links button:hover { color: var(--accent-sky); }
     .footer-bottom { padding-top: 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 0.8rem; color: var(--text-muted); }
+
     .wa-float { position: fixed; right: 20px; bottom: 20px; z-index: 45; display: flex; align-items: center; gap: 10px; }
     .wa-pill { display: none; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; background: var(--bg-surface); border: 1px solid var(--border-strong); color: var(--text-primary); font-size: 0.78rem; font-weight: 700; box-shadow: var(--shadow-lg); }
     @media (min-width: 640px) { .wa-pill { display: inline-flex; } }
@@ -389,6 +542,7 @@
     .modal-header { padding: 18px 22px; background: var(--bg-surface-alt); border-bottom: 1px solid var(--border-subtle); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
     .modal-body { padding: 24px; overflow-y: auto; }
     .modal-footer { padding: 16px 22px; border-top: 1px solid var(--border-subtle); display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; }
+
     .resume-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 14px 22px; background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle); }
     #printable-resume-area { background: #FFFFFF; color: #0F172A; padding: 32px; overflow-y: auto; font-size: 0.88rem; line-height: 1.55; }
     .ats-sheet { max-width: 790px; margin: 0 auto; }
@@ -402,6 +556,7 @@
     .ats-section ul { margin: 4px 0 0; padding-left: 18px; color: #1E293B; }
     .ats-section li { margin-bottom: 4px; }
     .ats-role-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; font-weight: 700; color: #0F172A; margin-top: 10px; }
+
     .toast { position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px); z-index: 100; display: flex; align-items: center; gap: 10px; padding: 12px 18px; border-radius: 12px; background: #0F172A; color: #F8FAFC; border: 1px solid rgba(56, 189, 248, 0.35); box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4); font-size: 0.86rem; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease; }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
@@ -418,12 +573,19 @@
   </style>
 </head>
 <body>
+
+  <!-- ==================== 1. STICKY GLASSMORPHIC NAVBAR ==================== -->
   <header class="site-header no-print">
     <div class="container header-inner">
       <a href="/top" class="brand js-nav-link" data-section="top" aria-label="S M Jobaer Alam Home">
         <div class="brand-logo">
           <svg viewBox="0 0 48 48" width="32" height="32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs><linearGradient id="jaShieldGrad" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse"><stop stop-color="#38BDF8" /><stop offset="1" stop-color="#2563EB" /></linearGradient></defs>
+            <defs>
+              <linearGradient id="jaShieldGrad" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#38BDF8" />
+                <stop offset="1" stop-color="#2563EB" />
+              </linearGradient>
+            </defs>
             <path d="M24 4L40 10.5V22.5C40 32.8 33.1 40.9 24 44.2C14.9 40.9 8 32.8 8 22.5V10.5L24 4Z" stroke="url(#jaShieldGrad)" stroke-width="2.5" fill="rgba(56,189,248,0.1)" />
             <path d="M16.5 16.5C17.4 13.8 19.9 12 22.8 12C26.1 12 28.9 14.3 29.4 17.4" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" />
             <text x="24" y="31.5" text-anchor="middle" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="14.5" font-weight="800">JA</text>
@@ -434,6 +596,7 @@
           <span class="brand-domain">www.jobaeralam.com</span>
         </div>
       </a>
+
       <nav class="nav-desktop" aria-label="Primary Navigation">
         <a href="/expertise" class="js-nav-link" data-section="expertise">Expertise</a>
         <a href="/experience" class="js-nav-link" data-section="experience">Experience</a>
@@ -444,21 +607,25 @@
         <a href="/faq" class="js-nav-link" data-section="faq">FAQ</a>
         <a href="/contact" class="js-nav-link" data-section="contact">Contact</a>
       </nav>
+
       <div class="header-actions">
         <button id="theme-toggle-btn" type="button" class="icon-btn" aria-label="Toggle Dark and Light Mode" title="Toggle Dark / Light Mode">
           <svg id="theme-icon-sun" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
           <svg id="theme-icon-moon" class="icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
         </button>
+
         <button type="button" class="btn btn-primary header-resume-btn js-open-resume">
           <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Download Resume</span>
         </button>
+
         <button id="mobile-menu-toggle" type="button" class="icon-btn mobile-menu-btn" aria-label="Toggle Mobile Menu" aria-expanded="false">
           <svg id="mobile-icon-open" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           <svg id="mobile-icon-close" class="icon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
       </div>
     </div>
+
     <div id="mobile-drawer" class="mobile-drawer">
       <nav class="mobile-nav-list" aria-label="Mobile Navigation">
         <a href="/expertise" class="js-mobile-link js-nav-link" data-section="expertise">Expertise &amp; Certifications</a>
@@ -478,9 +645,11 @@
   </header>
 
   <main id="top" class="no-print">
+    <!-- ==================== 2. HERO SECTION & LIVE US TIME ZONE OVERLAP ==================== -->
     <section class="hero">
       <div class="hero-glow-1"></div>
       <div class="hero-glow-2"></div>
+
       <div class="container">
         <div class="hero-grid">
           <div>
@@ -488,26 +657,32 @@
               <span class="pulse-dot"></span>
               <span>Available for US Remote &amp; On-Premises Roles &bull; Global Freelance &amp; Consulting</span>
             </div>
+
             <h1 class="hero-title">
               S M Jobaer Alam
               <span class="hero-title-gradient">Microsoft 365 &amp; Cloud Engineer | Microsoft Security Specialist</span>
             </h1>
+
             <p class="hero-subtitle">
               <strong>16+ years</strong> securing, migrating, and scaling enterprise Microsoft 365, Entra ID, Azure, and hybrid IT environments across <strong>37+ branch locations</strong>. Helping US enterprises, Europe-facing remote teams, and global freelance clients achieve <strong>Zero Trust security</strong>, <strong>ISO 27001 compliance</strong>, and resilient cloud operations.
             </p>
+
             <div class="hero-ctas">
               <button type="button" class="btn btn-primary js-open-resume">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span>Download Resume</span>
               </button>
+
               <a href="https://wa.me/8801712695028?text=Hi%20S%20M%20Jobaer%20Alam%2C%20I%20visited%20www.jobaeralam.com%20and%20would%20like%20to%20discuss%20an%20opportunity." target="_blank" rel="noopener noreferrer" class="btn btn-emerald">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
                 <span>Chat on WhatsApp</span>
               </a>
+
               <a href="https://www.linkedin.com/in/smjobaeralam" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
                 <span>LinkedIn Profile</span>
               </a>
+
               <a href="/tools" class="btn btn-subtle js-nav-link" data-section="tools">
                 <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
                 <span>Free Tools</span>
@@ -528,6 +703,7 @@
               </div>
               <span id="tz-overlap-badge" class="overlap-status">Checking...</span>
             </div>
+
             <div class="tz-list">
               <div class="tz-row">
                 <div><div class="tz-zone">US Eastern (ET)</div><div class="tz-city">New York / Washington DC</div></div>
@@ -542,6 +718,7 @@
                 <div><div id="clock-bst" class="tz-time">--:--:--</div><div id="date-bst" class="tz-date">---</div></div>
               </div>
             </div>
+
             <div class="quick-email-bar">
               <div class="quick-email-text">
                 <svg class="icon icon-sm" style="color:var(--accent-sky);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -573,6 +750,7 @@
       </div>
     </section>
 
+    <!-- ==================== 3. INTERACTIVE EXPERTISE & CERTIFICATIONS ==================== -->
     <section id="expertise" class="section">
       <div class="container">
         <div class="section-header">
@@ -747,6 +925,7 @@
       </div>
     </section>
 
+    <!-- ==================== 5. EXECUTIVE CASE STUDIES ==================== -->
     <section id="case-studies" class="section">
       <div class="container">
         <div class="section-header">
@@ -754,6 +933,7 @@
           <h2 class="section-title">Executive Architecture &amp; Security Case Studies</h2>
           <p class="section-desc">Click any case study to inspect the full business challenge, solution architecture, technologies, and measurable impact.</p>
         </div>
+
         <div class="cases-grid" id="cases-grid">
           <article class="card case-card" data-case-id="0">
             <div><div class="case-top"><span class="case-badge">Zero Trust &amp; M365 Security</span></div><h3>Zero Trust &amp; Microsoft 365 Security Hardening</h3><p>Eliminated standing admin privileges, hardened Exchange Online (SPF/DKIM/DMARC), and unified multinational threat detection with Entra ID, PIM, Intune, Defender XDR, and Sentinel.</p><div class="tag-list"><span class="tag">Entra ID &amp; PIM</span><span class="tag">Defender XDR</span><span class="tag">Sentinel SIEM</span><span class="tag">Intune &amp; BitLocker</span></div></div>
@@ -782,7 +962,7 @@
           <div class="section-header" style="margin-bottom:0;">
             <span class="eyebrow">Community Releases &bull; 100% Free</span>
             <h2 class="section-title">My Developed Tools &amp; Software</h2>
-            <p class="section-desc">Free IT utilities, Microsoft 365 administration toolkits, and PowerShell automation scripts built by S M Jobaer Alam. Download free of cost—no sign-up required.</p>
+            <p class="section-desc">Free IT utilities, enterprise business apps, Microsoft 365 toolkits, and PowerShell automation scripts built by S M Jobaer Alam. Download free of cost—no sign-up required.</p>
           </div>
           <span class="overlap-status">Freeware &amp; Open Utilities</span>
         </div>
@@ -794,6 +974,7 @@
           <button type="button" class="filter-tab" data-tool-filter="automation">Automation</button>
           <button type="button" class="filter-tab" data-tool-filter="utility">Windows Utility</button>
           <button type="button" class="filter-tab" data-tool-filter="network">Network Tools</button>
+          <button type="button" class="filter-tab" data-tool-filter="business">Business Apps</button>
         </div>
 
         <div class="tools-grid" id="tools-grid"></div>
@@ -802,13 +983,14 @@
           <div>
             <div class="cert-meta" style="margin-bottom:4px;">Custom Engineering &amp; Enterprise Support</div>
             <h3 style="margin:0 0 4px; font-size:1.06rem;">Need a custom version or enterprise rollout for your organization?</h3>
-            <p style="margin:0; font-size:0.86rem; color:var(--text-secondary);">I build tailored PowerShell modules, Microsoft 365 automation tools, and Windows IT utilities on contract.</p>
+            <p style="margin:0; font-size:0.86rem; color:var(--text-secondary);">I build tailored PowerShell modules, enterprise inventory/web apps, Microsoft 365 automation tools, and Windows IT utilities on contract.</p>
           </div>
           <button type="button" id="tools-request-custom-btn" class="btn btn-primary">Request Custom Tool</button>
         </div>
       </div>
     </section>
 
+    <!-- ==================== 6. SMART FREELANCE & HIRING HUB ("HIRE ME") ==================== -->
     <section id="hire-me" class="section">
       <div class="container">
         <div class="section-header">
@@ -838,6 +1020,7 @@
                 <button type="button" class="choice-chip" data-eng="Monthly Retainer">Monthly Retainer</button>
               </div>
             </div>
+
             <div class="builder-step">
               <span class="field-label">2. Toggle Technical Focus Areas (Multi-Select)</span>
               <div class="option-grid" id="builder-services">
@@ -851,6 +1034,7 @@
                 <button type="button" class="choice-chip" data-service="Firewall & VPN">Firewall &amp; VPN</button>
               </div>
             </div>
+
             <div class="builder-step">
               <span class="field-label">3. Target Timeline</span>
               <div class="option-grid" id="builder-timeline">
@@ -860,6 +1044,7 @@
                 <button type="button" class="choice-chip" data-timeline="Ongoing">Ongoing</button>
               </div>
             </div>
+
             <div class="builder-step">
               <span class="field-label">4. Estimated Budget / Compensation Range</span>
               <div class="option-grid" id="builder-budget">
@@ -888,6 +1073,7 @@
       </div>
     </section>
 
+    <!-- ==================== 7. ABOUT & INTERACTIVE FAQ ACCORDION ==================== -->
     <section id="about" class="section section-alt">
       <div class="container">
         <div class="about-top-grid">
@@ -962,6 +1148,7 @@
           <h2 class="section-title">Hiring, Freelance &amp; Consulting FAQ</h2>
           <p class="section-desc">Clear answers for US hiring managers, technical recruiters, and global freelance clients.</p>
         </div>
+
         <div class="faq-list" id="faq-accordion">
           <div class="faq-item"><button type="button" class="faq-trigger" aria-expanded="false"><span>1. How do you handle US time zone overlap for remote teams?</span><span class="faq-plus" aria-hidden="true">+</span></button><div class="faq-body">I maintain flexible working hours that overlap cleanly with US Eastern (ET), Central (CT), and Pacific (PT) morning/midday schedules for live standups, incident response, and architecture reviews, supported by fiber broadband and backup power.</div></div>
           <div class="faq-item"><button type="button" class="faq-trigger" aria-expanded="false"><span>2. Are you available for both US Remote and US On-Premises / Relocation roles?</span><span class="faq-plus" aria-hidden="true">+</span></button><div class="faq-body">Yes. I am actively open to US Remote full-time roles (W-2, C2C, or direct international contract), US On-Premises/Hybrid roles with relocation support, Europe-facing remote engagements, and Dhaka onsite leadership roles.</div></div>
@@ -973,13 +1160,15 @@
       </div>
     </section>
 
+    <!-- ==================== 8. CONTACT SECTION ==================== -->
     <section id="contact" class="section section-alt">
       <div class="container">
         <div class="contact-grid">
           <div>
             <span class="eyebrow">Direct Contact</span>
             <h2 class="section-title" style="margin-bottom:12px;">Let’s Secure &amp; Scale Your Cloud Environment</h2>
-            <p class="section-desc" style="margin-bottom:24px;">Reach out directly for US remote/on-premises interviews, freelance proposals, or Microsoft 365|Cloud &amp; cybersecurity consulting.</p>
+            <p class="section-desc" style="margin-bottom:24px;">Reach out directly for US remote/on-premises interviews, freelance proposals, or Microsoft 365 &amp; cybersecurity consulting.</p>
+
             <div class="channel-list">
               <div class="channel-card"><div class="channel-left"><div class="channel-icon" style="background:var(--badge-blue-bg); color:var(--badge-blue-text);"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></div><div><div class="channel-label">Official Email</div><a href="mailto:hello@jobaeralam.com" class="channel-value">hello@jobaeralam.com</a></div></div><button type="button" class="btn btn-secondary btn-sm js-copy-btn" data-copy="hello@jobaeralam.com" data-toast="Copied hello@jobaeralam.com">Copy</button></div>
               <div class="channel-card"><div class="channel-left"><div class="channel-icon" style="background:var(--badge-emerald-bg); color:var(--badge-emerald-text);"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div><div><div class="channel-label">WhatsApp Direct (Fastest)</div><div class="channel-value">+880 1712695028</div></div></div><a href="https://wa.me/8801712695028?text=Hi%20S%20M%20Jobaer%20Alam%2C%20I%20visited%20www.jobaeralam.com%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="btn btn-emerald btn-sm">Chat Now</a></div>
@@ -990,10 +1179,12 @@
 
           <form id="contact-form" class="card" novalidate>
             <input id="contact-botcheck" type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
+
             <div class="form-row-2">
               <div><label for="contact-name" class="field-label">Full Name *</label><input id="contact-name" type="text" class="form-control" placeholder="John Smith" required /></div>
               <div><label for="contact-email" class="field-label">Your Email Address *</label><input id="contact-email" type="email" class="form-control" placeholder="john@company.com" required /></div>
             </div>
+
             <div class="form-row-2">
               <div><label for="contact-company" class="field-label">Company / Platform (Optional)</label><input id="contact-company" type="text" class="form-control" placeholder="e.g., Acme Corp / LinkedIn / Upwork" /></div>
               <div>
@@ -1007,19 +1198,24 @@
                 </select>
               </div>
             </div>
+
             <div class="suggestions-box">
               <div class="suggestions-head"><span id="suggestions-label">Suggested Prompts</span><span style="color:var(--text-muted); font-weight:600; text-transform:none;">Click any prompt to insert</span></div>
               <div id="suggestions-container" class="suggestions-chips"></div>
             </div>
+
             <div class="form-group">
               <label for="contact-details" class="field-label">Project or Role Details *</label>
               <textarea id="contact-details" class="form-control" required placeholder="Share role expectations, cloud environment details, or timeline..."></textarea>
             </div>
+
             <div class="form-actions">
               <button type="submit" id="contact-submit-btn" class="btn btn-primary btn-grow">Send via Email (hello@jobaeralam.com)</button>
               <button type="button" id="contact-send-wa" class="btn btn-emerald btn-grow">Send via WhatsApp</button>
             </div>
+
             <div id="contact-status-banner" class="status-banner" role="status" aria-live="polite"><div id="contact-status-title" class="status-banner-title"></div><div id="contact-status-msg"></div></div>
+
             <div id="contact-dispatch-panel" class="dispatch-panel">
               <div class="field-label" style="margin-bottom:4px; color:var(--accent-sky);">Direct One-Click Dispatch Options (Pre-Filled)</div>
               <div style="font-size:0.78rem; color:var(--text-muted);">Choose your preferred mail client to deliver this exact inquiry to <strong>hello@jobaeralam.com</strong>:</div>
@@ -1030,6 +1226,7 @@
                 <button type="button" id="dispatch-copy" class="btn btn-subtle btn-sm">Copy Message</button>
               </div>
             </div>
+
             <div class="webmail-quick-row">
               <span><strong>Prefer Webmail?</strong> Direct instant actions:</span>
               <div class="webmail-quick-actions">
@@ -1044,15 +1241,25 @@
     </section>
   </main>
 
+  <!-- ==================== FOOTER ==================== -->
   <footer class="site-footer no-print">
     <div class="container">
       <div class="footer-top">
         <div class="brand">
           <div class="brand-logo" style="width:38px; height:38px; font-weight:800; font-size:0.86rem; color:var(--accent-sky);">JA</div>
-          <div class="brand-text"><span class="brand-name" style="font-size:0.95rem;">S M Jobaer Alam</span><span class="brand-domain">www.jobaeralam.com &bull; hello@jobaeralam.com &bull; +880 1712695028</span></div>
+          <div class="brand-text">
+            <span class="brand-name" style="font-size:0.95rem;">S M Jobaer Alam</span>
+            <span class="brand-domain">www.jobaeralam.com &bull; hello@jobaeralam.com &bull; +880 1712695028</span>
+          </div>
         </div>
         <div class="footer-links">
-          <a href="/expertise" class="js-nav-link" data-section="expertise">Expertise</a><a href="/experience" class="js-nav-link" data-section="experience">Experience</a><a href="/case-studies" class="js-nav-link" data-section="case-studies">Case Studies</a><a href="/tools" class="js-nav-link" data-section="tools">Free Tools</a><a href="/hire-me" class="js-nav-link" data-section="hire-me">Hire Me</a><a href="https://www.linkedin.com/in/smjobaeralam" target="_blank" rel="noopener noreferrer">LinkedIn</a><button type="button" class="link-btn js-open-resume" style="font-size:0.84rem;">Download Resume</button>
+          <a href="/expertise" class="js-nav-link" data-section="expertise">Expertise</a>
+          <a href="/experience" class="js-nav-link" data-section="experience">Experience</a>
+          <a href="/case-studies" class="js-nav-link" data-section="case-studies">Case Studies</a>
+          <a href="/tools" class="js-nav-link" data-section="tools">Free Tools</a>
+          <a href="/hire-me" class="js-nav-link" data-section="hire-me">Hire Me</a>
+          <a href="https://www.linkedin.com/in/smjobaeralam" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <button type="button" class="link-btn js-open-resume" style="font-size:0.84rem;">Download Resume</button>
         </div>
       </div>
       <div class="footer-bottom">
@@ -1062,6 +1269,7 @@
     </div>
   </footer>
 
+  <!-- ==================== FLOATING WHATSAPP QUICK-CHAT ==================== -->
   <div class="wa-float no-print">
     <div class="wa-pill"><span class="pulse-dot"></span><span>Chat on WhatsApp — Replies fast</span></div>
     <a href="https://wa.me/8801712695028?text=Hi%20S%20M%20Jobaer%20Alam%2C%20I%20visited%20www.jobaeralam.com%20and%20would%20like%20to%20connect." target="_blank" rel="noopener noreferrer" class="wa-fab" aria-label="Chat on WhatsApp with S M Jobaer Alam">
@@ -1069,6 +1277,7 @@
     </a>
   </div>
 
+  <!-- ==================== CASE STUDY MODAL ==================== -->
   <div id="case-modal" class="modal-backdrop no-print" role="dialog" aria-modal="true" aria-labelledby="case-modal-title">
     <div class="modal-dialog">
       <div class="modal-header">
@@ -1088,15 +1297,23 @@
     </div>
   </div>
 
+  <!-- ==================== TOOL DETAILS & RELEASE MODAL ==================== -->
   <div id="tool-modal" class="modal-backdrop no-print" role="dialog" aria-modal="true" aria-labelledby="tool-modal-title">
     <div class="modal-dialog">
       <div class="modal-header">
-        <div><div class="tool-badges"><span id="tool-modal-cat" class="case-badge"></span><span class="tool-free-pill">FREE</span><span id="tool-modal-ver" class="tool-ver-pill"></span></div><h3 id="tool-modal-title" style="margin:8px 0 0; font-size:1.2rem;"></h3></div>
+        <div>
+          <div class="tool-badges">
+            <span id="tool-modal-cat" class="case-badge"></span>
+            <span class="tool-free-pill">FREE</span>
+            <span id="tool-modal-ver" class="tool-ver-pill"></span>
+          </div>
+          <h3 id="tool-modal-title" style="margin:8px 0 0; font-size:1.2rem;"></h3>
+        </div>
         <button type="button" class="icon-btn js-close-modal" data-modal="tool-modal" aria-label="Close Tool Details"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
         <p id="tool-modal-desc" style="margin:0; font-size:0.92rem; color:var(--text-secondary);"></p>
-        <div class="card" style="background:var(--bg-surface-alt);"><div class="field-label" style="color:var(--accent-sky);">Key Features</div><ul id="tool-modal-features" style="margin:0; padding-left:18px; font-size:0.88rem; color:var(--text-primary);"></ul></div>
+        <div class="card" style="background:var(--bg-surface-alt);"><div class="field-label" style="color:var(--accent-sky);">Key Features &amp; Release Notes</div><ul id="tool-modal-features" style="margin:0; padding-left:18px; font-size:0.88rem; color:var(--text-primary);"></ul></div>
         <div class="card" style="background:var(--bg-surface-alt);"><div class="field-label">System Requirements &amp; Quick Start</div><div id="tool-modal-reqs" style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:8px;"></div><code id="tool-modal-usage" class="sha-code" style="color:var(--badge-emerald-text);"></code></div>
         <div class="card" style="background:var(--bg-surface-alt);">
           <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;"><span class="field-label" style="margin:0;">SHA-256 Integrity Checksum</span><button type="button" id="tool-modal-copy-sha" class="btn btn-secondary btn-sm">Copy SHA-256</button></div>
@@ -1112,6 +1329,7 @@
     </div>
   </div>
 
+  <!-- ==================== 9. BULLETPROOF DIRECT RESUME DOWNLOAD MODAL ==================== -->
   <div id="resume-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="resume-modal-title">
     <div class="modal-dialog modal-lg">
       <div class="modal-header no-print">
@@ -1183,8 +1401,13 @@
     </div>
   </div>
 
-  <div id="toast" class="toast no-print" role="status" aria-live="polite"><span style="color:#34D399; font-weight:800;">&#10003;</span><span id="toast-text">Done</span></div>
+  <!-- ==================== TOAST NOTIFICATION ==================== -->
+  <div id="toast" class="toast no-print" role="status" aria-live="polite">
+    <span style="color:#34D399; font-weight:800;">&#10003;</span>
+    <span id="toast-text">Done</span>
+  </div>
 
+  <!-- ==================== SELF-CONTAINED, ERROR-FREE VANILLA JAVASCRIPT ==================== -->
   <script>
     (function () {
       'use strict';
@@ -1200,6 +1423,29 @@
 
       /* === SECTION: FREE_TOOLS_CATALOG === */
       var FREE_TOOLS_CATALOG = [
+        {
+          id: 'inventory-management-by-jobaer',
+          name: 'Inventory Management by Jobaer',
+          version: 'v1.0.0',
+          category: 'business',
+          categoryLabel: 'Business Apps',
+          license: 'Freeware',
+          size: 'Enterprise Release (.zip)',
+          requirements: 'Windows Service Installer • Linux systemd • Docker • Azure App Service (Released 2026-11-20)',
+          shortDesc: 'Enterprise multi-location inventory, purchasing, sales orders, returns, and invoicing platform with immutable weighted-average ledger, manager approvals, RBAC, and branded PDF/CSV exports.',
+          features: [
+            'Multi-Location Stock & Immutable Ledger: Track on-hand, reserved, and available stock across warehouses and sales centers with receipts, issues, adjustments, cycle counts, transfers, and moving weighted-average costing.',
+            'Orders, Returns & Replenishment: Approval-based purchase orders with partial deliveries, sales order stock reservation & invoicing, customer return credits, inspected warehouse returns (dispatch/transit/receipt), and one-click draft PO reorder suggestions.',
+            'Manager Approvals, RBAC & Security: Four roles (Admin, Manager, Clerk / Sales Agent, Viewer), manager approval for invoice changes/returns/cancellations, full audit log, failed sign-in lockout, secure sessions, and CSRF protection.',
+            'Branded Reports & Safe 100k CSV Import: Branded PDF/CSV exports (POs, order confirmations, packing slips, invoices, return notes), custom company branding/currency/time zone, and validated all-or-nothing CSV imports up to 100,000 rows.',
+            'Enterprise Deployment & Admin Tools: Windows background service installer (auto-restart, nightly backups, firewall rule, shortcuts), backup/restore/admin-reset utilities, plus Linux systemd, Docker, and Azure App Service support.'
+          ],
+          usage: 'Extract ZIP -> Run Windows Service Installer (or Docker / Linux systemd / Azure App Service) -> Sign in & configure Company Branding',
+          sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
+          fileName: 'Inventory-Management-by-Jobaer-v1.0.0.zip',
+          downloadUrl: 'downloads/Inventory-Management-by-Jobaer-v1.0.0.zip',
+          isLiveFile: true
+        },
         {
           id: 'm365-security-auditor',
           name: 'M365 ESPA By Jobaer',
@@ -1261,48 +1507,6 @@
           sha256: '4563C7E80077F0AA6905A16B8F710AA3BD1D83040282CF6266F4797BB2300E3A',
           fileName: 'DNS-MailAuth-Diagnostic-v1.1.0.zip',
           downloadUrl: 'downloads/DNS-MailAuth-Diagnostic-v1.1.0.zip',
-          isLiveFile: true
-        },
-        {
-          id: 'm365-lifecycle-automator',
-          name: 'M365 User Onboarding & Offboarding Toolkit',
-          version: 'v2.0.1',
-          category: 'automation',
-          categoryLabel: 'Automation',
-          license: 'Freeware / MIT',
-          size: '940 KB (.zip)',
-          requirements: 'Windows 10/11 • PowerShell 7+ • ExchangeOnlineManagement',
-          shortDesc: 'Zero-touch PowerShell & Microsoft Graph automation toolkit for standardized employee onboarding, license assignment, and secure offboarding.',
-          features: [
-            'Automates Entra ID account creation, M365 group/license assignment, and Teams/SharePoint access.',
-            'One-command secure offboarding: revokes active sessions, blocks sign-in, converts mailbox to shared, and exports audit logs.',
-            'Supports bulk CSV processing with built-in dry-run (-WhatIf) safety mode.'
-          ],
-          usage: '.\\Start-M365Lifecycle.ps1 -Action Offboard -UserPrincipalName "user@domain.com" -WhatIf',
-          sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
-          fileName: 'M365-Lifecycle-Toolkit-v2.0.1.zip',
-          downloadUrl: 'downloads/M365-Lifecycle-Toolkit-v2.0.1.zip',
-          isLiveFile: true
-        },
-        {
-          id: 'dns-mail-auth-checker',
-          name: 'DNS, SPF, DKIM & DMARC Diagnostic Utility',
-          version: 'v1.1.0',
-          category: 'security',
-          categoryLabel: 'Security & Audit',
-          license: 'Freeware',
-          size: '1.2 MB (.zip)',
-          requirements: 'Windows 10/11 • PowerShell 5.1 / 7+',
-          shortDesc: 'Lightweight mail-security diagnostic tool that validates MX, SPF lookup limits, DKIM selectors, DMARC policies, and BIMI/MTA-STS records in seconds.',
-          features: [
-            'Detects SPF 10-DNS-lookup limit errors and syntax mistakes before mail delivery breaks.',
-            'Validates Microsoft 365 selector1/selector2 DKIM CNAME records automatically.',
-            'Exports clean troubleshooting reports for Exchange Online and client migrations.'
-          ],
-          usage: '.\\Test-MailAuthDNS.ps1 -Domain "jobaeralam.com" -CheckM365Selectors',
-          sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
-          fileName: 'DNS-MailAuth-Checker-v1.1.0.zip',
-          downloadUrl: 'downloads/DNS-MailAuth-Checker-v1.1.0.zip',
           isLiveFile: true
         },
         {
@@ -1370,6 +1574,9 @@
         }
       ];
 
+      /* =========================================================
+         SHARED UTILITIES
+         ========================================================= */
       var toastTimer = null;
       function showToast(message) {
         try {
@@ -1379,7 +1586,9 @@
           textEl.textContent = message;
           toastEl.classList.add('show');
           if (toastTimer) clearTimeout(toastTimer);
-          toastTimer = setTimeout(function () { toastEl.classList.remove('show'); }, 3400);
+          toastTimer = setTimeout(function () {
+            toastEl.classList.remove('show');
+          }, 3400);
         } catch (err) {}
       }
 
@@ -1390,16 +1599,28 @@
           ta.setAttribute('readonly', '');
           ta.style.position = 'fixed';
           ta.style.left = '-9999px';
+          ta.style.top = '0';
           document.body.appendChild(ta);
           ta.select();
           ta.setSelectionRange(0, ta.value.length);
           var copied = document.execCommand('copy');
           document.body.removeChild(ta);
-          if (copied) { showToast(successMsg || 'Copied to clipboard!'); return; }
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(text).then(function () { showToast(successMsg || 'Copied to clipboard!'); }).catch(function () { showToast('Press Ctrl+C to copy.'); });
+          if (copied) {
+            showToast(successMsg || 'Copied to clipboard!');
+            return;
           }
-        } catch (err) { showToast('Unable to copy automatically.'); }
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(function () {
+              showToast(successMsg || 'Copied to clipboard!');
+            }).catch(function () {
+              showToast('Press Ctrl+C to copy the selected text.');
+            });
+          } else {
+            showToast('Unable to copy automatically.');
+          }
+        } catch (err) {
+          showToast('Unable to copy automatically.');
+        }
       }
 
       function triggerFileDownload(filename, content, mimeType) {
@@ -1413,45 +1634,150 @@
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          setTimeout(function () { try { URL.revokeObjectURL(url); } catch (e) {} }, 2000);
+          setTimeout(function () {
+            try { URL.revokeObjectURL(url); } catch (e) {}
+          }, 2000);
           return true;
-        } catch (err) { return false; }
+        } catch (err) {
+          try {
+            var fallbackLink = document.createElement('a');
+            fallbackLink.href = 'data:' + mimeType + ',' + encodeURIComponent(content);
+            fallbackLink.download = filename;
+            document.body.appendChild(fallbackLink);
+            fallbackLink.click();
+            document.body.removeChild(fallbackLink);
+            return true;
+          } catch (fallbackErr) {
+            return false;
+          }
+        }
       }
 
-      function openModal(modalId) { var modal = document.getElementById(modalId); if (!modal) return; modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
-      function closeModal(modalId) { var modal = document.getElementById(modalId); if (!modal) return; modal.classList.remove('open'); if (!document.querySelector('.modal-backdrop.open')) document.body.style.overflow = ''; }
-      function closeAllModals() { var modals = document.querySelectorAll('.modal-backdrop.open'); for (var i = 0; i < modals.length; i++) modals[i].classList.remove('open'); document.body.style.overflow = ''; }
+      function openModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (!modal) return;
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
 
-      document.addEventListener('DOMContentLoaded', function () {
+      function closeModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (!modal) return;
+        modal.classList.remove('open');
+        if (!document.querySelector('.modal-backdrop.open')) {
+          document.body.style.overflow = '';
+        }
+      }
+
+      function closeAllModals() {
+        var modals = document.querySelectorAll('.modal-backdrop.open');
+        for (var i = 0; i < modals.length; i++) {
+          modals[i].classList.remove('open');
+        }
+        document.body.style.overflow = '';
+      }
+
+      /* =========================================================
+         SAFE BOOT (Works on Azure, file://, and Live Previews)
+         ========================================================= */
+      function bootPortfolio() {
         var refreshContactSuggestions = function () {};
-        var modules = [initFooterYear, initTheme, initMobileMenu, initNavigationAndScrollSpy, initProfilePhoto, initCopyButtons, initLiveClocks, initExpertiseFilter, initExperienceTimeline, initCaseStudies, initContactForm, initFreeToolsHub, initScopeBuilder, initFAQ, initResumeHub, initModals];
-        for (var i = 0; i < modules.length; i++) { try { modules[i](); } catch (err) { console.error(err); } }
 
-        function initFooterYear() { var el = document.getElementById('footer-year'); if (el) el.textContent = String(new Date().getFullYear()); }
+        var modules = [
+          initFooterYear,
+          initTheme,
+          initMobileMenu,
+          initNavigationAndScrollSpy,
+          initProfilePhoto,
+          initCopyButtons,
+          initLiveClocks,
+          initExpertiseFilter,
+          initExperienceTimeline,
+          initCaseStudies,
+          initContactForm,
+          initFreeToolsHub,
+          initScopeBuilder,
+          initFAQ,
+          initResumeHub,
+          initModals
+        ];
+
+        for (var i = 0; i < modules.length; i++) {
+          try {
+            modules[i]();
+          } catch (err) {
+            console.error('Module init error:', err);
+          }
+        }
+
+        function initFooterYear() {
+          var el = document.getElementById('footer-year');
+          if (el) el.textContent = String(new Date().getFullYear());
+        }
 
         function initTheme() {
-          var btn = document.getElementById('theme-toggle-btn'), sun = document.getElementById('theme-icon-sun'), moon = document.getElementById('theme-icon-moon');
-          function applyTheme(t) { document.documentElement.setAttribute('data-theme', t); if (sun && moon) { sun.style.display = t === 'dark' ? 'inline-block' : 'none'; moon.style.display = t === 'light' ? 'inline-block' : 'none'; } try { localStorage.setItem('jobaer_portfolio_theme', t); } catch (e) {} }
-          var saved = 'dark'; try { var s = localStorage.getItem('jobaer_portfolio_theme'); if (s === 'light' || s === 'dark') saved = s; } catch (e) {}
+          var btn = document.getElementById('theme-toggle-btn');
+          var sun = document.getElementById('theme-icon-sun');
+          var moon = document.getElementById('theme-icon-moon');
+
+          function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            if (sun && moon) {
+              sun.style.display = theme === 'dark' ? 'inline-block' : 'none';
+              moon.style.display = theme === 'light' ? 'inline-block' : 'none';
+            }
+            try { localStorage.setItem('jobaer_portfolio_theme', theme); } catch (e) {}
+          }
+
+          var saved = 'dark';
+          try {
+            var stored = localStorage.getItem('jobaer_portfolio_theme');
+            if (stored === 'light' || stored === 'dark') saved = stored;
+          } catch (e) {}
           applyTheme(saved);
-          if (btn) btn.addEventListener('click', function () { applyTheme((document.documentElement.getAttribute('data-theme') || 'dark') === 'dark' ? 'light' : 'dark'); });
+
+          if (btn) {
+            btn.addEventListener('click', function () {
+              var current = document.documentElement.getAttribute('data-theme') || 'dark';
+              applyTheme(current === 'dark' ? 'light' : 'dark');
+            });
+          }
         }
 
         function initMobileMenu() {
-          var toggle = document.getElementById('mobile-menu-toggle'), drawer = document.getElementById('mobile-drawer'), io = document.getElementById('mobile-icon-open'), ic = document.getElementById('mobile-icon-close');
+          var toggle = document.getElementById('mobile-menu-toggle');
+          var drawer = document.getElementById('mobile-drawer');
+          var iconOpen = document.getElementById('mobile-icon-open');
+          var iconClose = document.getElementById('mobile-icon-close');
           if (!toggle || !drawer) return;
-          function setOpen(o) { drawer.classList.toggle('open', o); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); if (io && ic) { io.style.display = o ? 'none' : 'inline-block'; ic.style.display = o ? 'inline-block' : 'none'; } }
-          toggle.addEventListener('click', function () { setOpen(!drawer.classList.contains('open')); });
+
+          function setOpen(isOpen) {
+            drawer.classList.toggle('open', isOpen);
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            if (iconOpen && iconClose) {
+              iconOpen.style.display = isOpen ? 'none' : 'inline-block';
+              iconClose.style.display = isOpen ? 'inline-block' : 'none';
+            }
+          }
+
+          toggle.addEventListener('click', function () {
+            setOpen(!drawer.classList.contains('open'));
+          });
+
           var links = drawer.querySelectorAll('.js-mobile-link, .js-open-resume');
-          for (var i = 0; i < links.length; i++) links[i].addEventListener('click', function () { setOpen(false); });
+          for (var i = 0; i < links.length; i++) {
+            links[i].addEventListener('click', function () { setOpen(false); });
+          }
         }
 
         function initNavigationAndScrollSpy() {
           var validSections = ['top', 'expertise', 'experience', 'case-studies', 'tools', 'hire-me', 'about', 'faq', 'contact'];
           var menuSections = ['expertise', 'experience', 'case-studies', 'tools', 'hire-me', 'about', 'faq', 'contact'];
           var navLinks = document.querySelectorAll('.nav-desktop a.js-nav-link, .mobile-nav-list a.js-nav-link');
-          var canRewriteUrl = window.location.protocol === 'http:' || window.location.protocol === 'https:';
-          var currentActive = '', isProgrammaticScroll = false, scrollLockTimer = null;
+          var canRewriteUrl = (window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.self === window.top;
+          var currentActive = '';
+          var isProgrammaticScroll = false;
+          var scrollLockTimer = null;
 
           function updateCleanUrl(sectionId, push) {
             if (!canRewriteUrl) return;
@@ -1479,8 +1805,14 @@
             if (scrollLockTimer) clearTimeout(scrollLockTimer);
             setActiveNav(sectionId);
             updateCleanUrl(sectionId, pushHistory);
-            if (sectionId === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
-            else window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - 78), behavior: 'smooth' });
+
+            if (sectionId === 'top') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+              var topPos = target.getBoundingClientRect().top + window.pageYOffset - 78;
+              window.scrollTo({ top: Math.max(0, topPos), behavior: 'smooth' });
+            }
+
             scrollLockTimer = setTimeout(function () { isProgrammaticScroll = false; }, 850);
           }
 
@@ -1498,9 +1830,20 @@
             var scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
             var winH = window.innerHeight || document.documentElement.clientHeight || 800;
             var docH = document.documentElement.scrollHeight || 0;
-            if (scrollY < 160) { setActiveNav('top'); updateCleanUrl('top', false); return; }
-            if (scrollY + winH >= docH - 60) { setActiveNav('contact'); updateCleanUrl('contact', false); return; }
-            var triggerLine = scrollY + 150, matched = 'top';
+
+            if (scrollY < 160) {
+              setActiveNav('top');
+              updateCleanUrl('top', false);
+              return;
+            }
+            if (scrollY + winH >= docH - 60) {
+              setActiveNav('contact');
+              updateCleanUrl('contact', false);
+              return;
+            }
+
+            var triggerLine = scrollY + 150;
+            var matched = 'top';
             for (var i = 0; i < menuSections.length; i++) {
               var el = document.getElementById(menuSections[i]);
               if (el && el.offsetTop <= triggerLine) matched = menuSections[i];
@@ -1513,7 +1856,10 @@
           window.addEventListener('scroll', function () {
             if (rafPending) return;
             rafPending = true;
-            window.requestAnimationFrame(function () { detectActiveSection(); rafPending = false; });
+            window.requestAnimationFrame(function () {
+              detectActiveSection();
+              rafPending = false;
+            });
           }, { passive: true });
 
           window.addEventListener('popstate', function () {
@@ -1522,21 +1868,35 @@
           });
 
           var initialSlug = (window.location.hash ? window.location.hash.replace('#', '') : window.location.pathname.replace(/^\/+|\/+$/g, '')).toLowerCase();
-          if (initialSlug && validSections.indexOf(initialSlug) !== -1) setTimeout(function () { scrollToSection(initialSlug, false); }, 60);
-          else detectActiveSection();
+          if (initialSlug && validSections.indexOf(initialSlug) !== -1) {
+            setTimeout(function () { scrollToSection(initialSlug, false); }, 60);
+          } else {
+            detectActiveSection();
+          }
         }
 
         function initProfilePhoto() {
-          var img = document.getElementById('about-profile-photo'), fb = document.getElementById('about-profile-fallback');
-          if (!img || !fb) return;
-          if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && img.getAttribute('src') === 'images/profile.jpg') {
+          var img = document.getElementById('about-profile-photo');
+          var fallback = document.getElementById('about-profile-fallback');
+          if (!img || !fallback) return;
+
+          if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.self === window.top && img.getAttribute('src') === 'images/profile.jpg') {
             img.setAttribute('src', '/images/profile.jpg');
           }
-          function showFb() { img.style.display = 'none'; fb.style.display = 'flex'; }
-          function showImg() { img.style.display = 'block'; fb.style.display = 'none'; }
-          img.addEventListener('error', showFb);
-          img.addEventListener('load', function () { if (img.naturalWidth > 0) showImg(); else showFb(); });
-          if (img.complete) { if (img.naturalWidth === 0) showFb(); else showImg(); }
+
+          function showFallback() { img.style.display = 'none'; fallback.style.display = 'flex'; }
+          function showImage() { img.style.display = 'block'; fallback.style.display = 'none'; }
+
+          img.addEventListener('error', showFallback);
+          img.addEventListener('load', function () {
+            if (img.naturalWidth > 0) showImage();
+            else showFallback();
+          });
+
+          if (img.complete) {
+            if (img.naturalWidth === 0) showFallback();
+            else showImage();
+          }
         }
 
         function initCopyButtons() {
@@ -1544,121 +1904,279 @@
             var btn = e.target.closest('.js-copy-btn');
             if (!btn) return;
             var text = btn.getAttribute('data-copy');
-            if (text) copyToClipboard(text, btn.getAttribute('data-toast'));
+            var msg = btn.getAttribute('data-toast');
+            if (text) copyToClipboard(text, msg);
           });
         }
 
         function initLiveClocks() {
-          var cEt = document.getElementById('clock-et'), dEt = document.getElementById('date-et'), cPt = document.getElementById('clock-pt'), dPt = document.getElementById('date-pt'), cBst = document.getElementById('clock-bst'), dBst = document.getElementById('date-bst'), badge = document.getElementById('tz-overlap-badge');
-          if (!cEt || !cPt || !cBst) return;
-          function fmt(d, tz) {
+          var clockEt = document.getElementById('clock-et');
+          var dateEt = document.getElementById('date-et');
+          var clockPt = document.getElementById('clock-pt');
+          var datePt = document.getElementById('date-pt');
+          var clockBst = document.getElementById('clock-bst');
+          var dateBst = document.getElementById('date-bst');
+          var badge = document.getElementById('tz-overlap-badge');
+          if (!clockEt || !clockPt || !clockBst) return;
+
+          function formatClock(date, timeZone) {
             try {
-              return {
-                time: new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(d),
-                date: new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', month: 'short', day: 'numeric' }).format(d),
-                hour24: parseInt(new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: '2-digit', hour12: false }).format(d), 10) || 12
-              };
-            } catch (e) { return { time: d.toLocaleTimeString(), date: d.toDateString(), hour24: d.getHours() }; }
-          }
-          function tick() {
-            var now = new Date(), et = fmt(now, 'America/New_York'), pt = fmt(now, 'America/Los_Angeles'), bst = fmt(now, 'Asia/Dhaka');
-            cEt.textContent = et.time; if (dEt) dEt.textContent = et.date;
-            cPt.textContent = pt.time; if (dPt) dPt.textContent = pt.date;
-            cBst.textContent = bst.time; if (dBst) dBst.textContent = bst.date;
-            if (badge) {
-              var active = (et.hour24 >= 7 && et.hour24 <= 16);
-              badge.textContent = active ? 'Live US Overlap Active' : 'Async Ready • Replies Fast';
-              badge.classList.toggle('async', !active);
+              var timeStr = new Intl.DateTimeFormat('en-US', { timeZone: timeZone, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true }).format(date);
+              var dateStr = new Intl.DateTimeFormat('en-US', { timeZone: timeZone, weekday: 'short', month: 'short', day: 'numeric' }).format(date);
+              var hour24 = parseInt(new Intl.DateTimeFormat('en-US', { timeZone: timeZone, hour: '2-digit', hour12: false }).format(date), 10);
+              return { time: timeStr, date: dateStr, hour24: isNaN(hour24) ? 12 : hour24 };
+            } catch (e) {
+              return { time: date.toLocaleTimeString(), date: date.toDateString(), hour24: date.getHours() };
             }
           }
-          tick(); setInterval(tick, 1000);
+
+          function tick() {
+            var now = new Date();
+            var et = formatClock(now, 'America/New_York');
+            var pt = formatClock(now, 'America/Los_Angeles');
+            var bst = formatClock(now, 'Asia/Dhaka');
+
+            clockEt.textContent = et.time;
+            if (dateEt) dateEt.textContent = et.date;
+            clockPt.textContent = pt.time;
+            if (datePt) datePt.textContent = pt.date;
+            clockBst.textContent = bst.time;
+            if (dateBst) dateBst.textContent = bst.date;
+
+            if (badge) {
+              var isOverlap = (et.hour24 >= 7 && et.hour24 <= 16);
+              badge.textContent = isOverlap ? 'Live US Overlap Active' : 'Async Ready • Replies Fast';
+              badge.classList.toggle('async', !isOverlap);
+            }
+          }
+
+          tick();
+          setInterval(tick, 1000);
         }
 
         function initExpertiseFilter() {
-          var tabsWrap = document.getElementById('expertise-filter-tabs'), grid = document.getElementById('skills-grid');
+          var tabsWrap = document.getElementById('expertise-filter-tabs');
+          var grid = document.getElementById('skills-grid');
           if (!tabsWrap || !grid) return;
-          var tabs = tabsWrap.querySelectorAll('.filter-tab'), cards = grid.querySelectorAll('.skill-card');
+
+          var tabs = tabsWrap.querySelectorAll('.filter-tab');
+          var cards = grid.querySelectorAll('.skill-card');
+
           tabsWrap.addEventListener('click', function (e) {
-            var tab = e.target.closest('.filter-tab'); if (!tab) return;
-            var f = tab.getAttribute('data-filter');
+            var tab = e.target.closest('.filter-tab');
+            if (!tab) return;
+            var filter = tab.getAttribute('data-filter');
             for (var i = 0; i < tabs.length; i++) tabs[i].classList.toggle('active', tabs[i] === tab);
-            for (var j = 0; j < cards.length; j++) cards[j].classList.toggle('hidden', f !== 'all' && cards[j].getAttribute('data-category') !== f);
+            for (var j = 0; j < cards.length; j++) cards[j].classList.toggle('hidden', filter !== 'all' && cards[j].getAttribute('data-category') !== filter);
           });
         }
 
         function initExperienceTimeline() {
-          var tl = document.getElementById('experience-timeline'), toggleAll = document.getElementById('toggle-all-exp');
-          if (!tl) return;
-          var cards = tl.querySelectorAll('.exp-card');
-          function sync() { if (!toggleAll) return; var all = true; for (var i = 0; i < cards.length; i++) if (!cards[i].classList.contains('expanded')) { all = false; break; } toggleAll.textContent = all ? 'Collapse All Roles' : 'Expand All Roles'; }
-          tl.addEventListener('click', function (e) {
-            var tr = e.target.closest('.exp-trigger'); if (!tr) return;
-            var card = tr.closest('.exp-card'); if (!card) return;
-            tr.setAttribute('aria-expanded', card.classList.toggle('expanded') ? 'true' : 'false'); sync();
+          var timeline = document.getElementById('experience-timeline');
+          var toggleAllBtn = document.getElementById('toggle-all-exp');
+          if (!timeline) return;
+
+          var cards = timeline.querySelectorAll('.exp-card');
+
+          function syncToggleAllLabel() {
+            if (!toggleAllBtn) return;
+            var allExpanded = true;
+            for (var i = 0; i < cards.length; i++) {
+              if (!cards[i].classList.contains('expanded')) { allExpanded = false; break; }
+            }
+            toggleAllBtn.textContent = allExpanded ? 'Collapse All Roles' : 'Expand All Roles';
+          }
+
+          timeline.addEventListener('click', function (e) {
+            var trigger = e.target.closest('.exp-trigger');
+            if (!trigger) return;
+            var card = trigger.closest('.exp-card');
+            if (!card) return;
+            var isExpanded = card.classList.toggle('expanded');
+            trigger.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+            syncToggleAllLabel();
           });
-          if (toggleAll) toggleAll.addEventListener('click', function () {
-            var expand = toggleAll.textContent.indexOf('Expand') !== -1;
-            for (var i = 0; i < cards.length; i++) { cards[i].classList.toggle('expanded', expand); var t = cards[i].querySelector('.exp-trigger'); if (t) t.setAttribute('aria-expanded', expand ? 'true' : 'false'); }
-            sync();
-          });
-          sync();
+
+          if (toggleAllBtn) {
+            toggleAllBtn.addEventListener('click', function () {
+              var shouldExpand = toggleAllBtn.textContent.indexOf('Expand') !== -1;
+              for (var i = 0; i < cards.length; i++) {
+                cards[i].classList.toggle('expanded', shouldExpand);
+                var trig = cards[i].querySelector('.exp-trigger');
+                if (trig) trig.setAttribute('aria-expanded', shouldExpand ? 'true' : 'false');
+              }
+              syncToggleAllLabel();
+            });
+          }
+
+          syncToggleAllLabel();
         }
 
         function initCaseStudies() {
-          var grid = document.getElementById('cases-grid'); if (!grid) return;
+          var casesGrid = document.getElementById('cases-grid');
+          if (!casesGrid) return;
+
           var caseStudies = [
-            { tag: 'Zero Trust & M365 Security', title: 'Zero Trust & Microsoft 365 Security Hardening', challenge: 'A distributed multinational organization faced standing Global Administrator exposure, inconsistent email authentication, and siloed endpoint/cloud security alerts across remote teams.', solution: 'Architected a Microsoft Zero Trust roadmap using Entra ID Conditional Access, phishing-resistant MFA, Privileged Identity Management (PIM), Exchange Online SPF/DKIM/DMARC enforcement, Intune + BitLocker device compliance, and unified Defender XDR + Microsoft Sentinel SIEM response.', impact: ['Eliminated standing privileged accounts through just-in-time PIM elevation and approval workflows.', 'Blocked domain spoofing and reduced phishing exposure with strict SPF, DKIM, and DMARC policies.', 'Centralized threat detection and incident response playbooks across endpoints, identities, and cloud workloads.'], tech: ['Microsoft Entra ID', 'Conditional Access & PIM', 'Exchange Online', 'Defender XDR', 'Microsoft Sentinel', 'Intune & BitLocker'] },
-            { tag: 'Multi-Site Infrastructure', title: '37-Branch Multi-Site Infrastructure & WAN Modernization', challenge: 'Managing 37 nationwide telecom branch offices with fragmented local servers, inconsistent VPN connectivity, manual patching, and high multi-site troubleshooting overhead.', solution: 'Standardized Active Directory, DNS, DHCP, and Group Policy across all 37 locations; consolidated workloads on Hyper-V and VMware clusters; engineered redundant FortiGate site-to-site VPNs and branch WAN links; and unified corporate IP PABX/VoIP communications.', impact: ['Delivered unified identity, policy enforcement, and reliable WAN/VPN uptime across all 37 branch locations.', 'Reduced manual server administration through PowerShell and Bash automation scripts.', 'Established repeatable ITIL incident, change, and disaster-recovery testing practices.'], tech: ['Windows Server & AD', 'Hyper-V & VMware', 'FortiGate & Site-to-Site VPN', 'Branch WAN / VLANs', 'IP PABX / VoIP', 'PowerShell & Bash'] },
-            { tag: 'Cloud & FinOps', title: 'Hybrid Azure/AWS Cloud Migration & Cost Optimization', challenge: 'Legacy on-premises workloads required high-availability cloud migration without runaway monthly Azure/AWS consumption or gaps in perimeter security and disaster recovery.', solution: 'Executed phased migrations to Azure VMs and App Services protected by Azure Firewall, VNet segmentation, and automated Backup/DR vaults while establishing FinOps tagging, right-sizing, and license/resource governance across Azure and AWS.', impact: ['Completed production migrations with minimal user disruption and verified backup/DR restore points.', 'Eliminated idle compute/storage waste and improved monthly cloud spend visibility across Azure and AWS.', 'Hardened hybrid cloud ingress/egress with Azure Firewall and documented architectural SOPs.'], tech: ['Microsoft Azure', 'Azure Firewall & VNet', 'Azure Backup & DR', 'App Services (CI/CD)', 'AWS Cost Control', 'Hybrid Cloud'] },
-            { tag: 'Compliance & Automation', title: 'ISO 27001 & Purview DLP Compliance Automation', challenge: 'Manual user onboarding/offboarding, ad-hoc license tracking, and scattered audit evidence created compliance drift and slowed down ISO 27001 readiness reviews.', solution: 'Implemented Microsoft Purview DLP, sensitivity classification, encryption, and retention controls alongside Entra ID access reviews, risk registers, and PowerShell/Microsoft Graph scripts automating user lifecycle and executive compliance reporting.', impact: ['Achieved audit-ready ISO 27001 documentation, asset inventories, and quarterly access-review evidence.', 'Cut manual onboarding/offboarding and license auditing effort dramatically via PowerShell & Graph automation.', 'Prevented unauthorized external data sharing across SharePoint, Teams, OneDrive, and Exchange Online.'], tech: ['ISO 27001 Controls', 'Microsoft Purview DLP', 'PowerShell', 'Microsoft Graph API', 'Exchange Online PS', 'Access Reviews'] }
+            {
+              tag: 'Zero Trust & M365 Security',
+              title: 'Zero Trust & Microsoft 365 Security Hardening',
+              challenge: 'A distributed multinational organization faced standing Global Administrator exposure, inconsistent email authentication, and siloed endpoint/cloud security alerts across remote teams.',
+              solution: 'Architected a Microsoft Zero Trust roadmap using Entra ID Conditional Access, phishing-resistant MFA, Privileged Identity Management (PIM), Exchange Online SPF/DKIM/DMARC enforcement, Intune + BitLocker device compliance, and unified Defender XDR + Microsoft Sentinel SIEM response.',
+              impact: [
+                'Eliminated standing privileged accounts through just-in-time PIM elevation and approval workflows.',
+                'Blocked domain spoofing and reduced phishing exposure with strict SPF, DKIM, and DMARC policies.',
+                'Centralized threat detection and incident response playbooks across endpoints, identities, and cloud workloads.'
+              ],
+              tech: ['Microsoft Entra ID', 'Conditional Access & PIM', 'Exchange Online', 'Defender XDR', 'Microsoft Sentinel', 'Intune & BitLocker']
+            },
+            {
+              tag: 'Multi-Site Infrastructure',
+              title: '37-Branch Multi-Site Infrastructure & WAN Modernization',
+              challenge: 'Managing 37 nationwide telecom branch offices with fragmented local servers, inconsistent VPN connectivity, manual patching, and high multi-site troubleshooting overhead.',
+              solution: 'Standardized Active Directory, DNS, DHCP, and Group Policy across all 37 locations; consolidated workloads on Hyper-V and VMware clusters; engineered redundant FortiGate site-to-site VPNs and branch WAN links; and unified corporate IP PABX/VoIP communications.',
+              impact: [
+                'Delivered unified identity, policy enforcement, and reliable WAN/VPN uptime across all 37 branch locations.',
+                'Reduced manual server administration through PowerShell and Bash automation scripts.',
+                'Established repeatable ITIL incident, change, and disaster-recovery testing practices.'
+              ],
+              tech: ['Windows Server & AD', 'Hyper-V & VMware', 'FortiGate & Site-to-Site VPN', 'Branch WAN / VLANs', 'IP PABX / VoIP', 'PowerShell & Bash']
+            },
+            {
+              tag: 'Cloud & FinOps',
+              title: 'Hybrid Azure/AWS Cloud Migration & Cost Optimization',
+              challenge: 'Legacy on-premises workloads required high-availability cloud migration without runaway monthly Azure/AWS consumption or gaps in perimeter security and disaster recovery.',
+              solution: 'Executed phased migrations to Azure VMs and App Services protected by Azure Firewall, VNet segmentation, and automated Backup/DR vaults while establishing FinOps tagging, right-sizing, and license/resource governance across Azure and AWS.',
+              impact: [
+                'Completed production migrations with minimal user disruption and verified backup/DR restore points.',
+                'Eliminated idle compute/storage waste and improved monthly cloud spend visibility across Azure and AWS.',
+                'Hardened hybrid cloud ingress/egress with Azure Firewall and documented architectural SOPs.'
+              ],
+              tech: ['Microsoft Azure', 'Azure Firewall & VNet', 'Azure Backup & DR', 'App Services (CI/CD)', 'AWS Cost Control', 'Hybrid Cloud']
+            },
+            {
+              tag: 'Compliance & Automation',
+              title: 'ISO 27001 & Purview DLP Compliance Automation',
+              challenge: 'Manual user onboarding/offboarding, ad-hoc license tracking, and scattered audit evidence created compliance drift and slowed down ISO 27001 readiness reviews.',
+              solution: 'Implemented Microsoft Purview DLP, sensitivity classification, encryption, and retention controls alongside Entra ID access reviews, risk registers, and PowerShell/Microsoft Graph scripts automating user lifecycle and executive compliance reporting.',
+              impact: [
+                'Achieved audit-ready ISO 27001 documentation, asset inventories, and quarterly access-review evidence.',
+                'Cut manual onboarding/offboarding and license auditing effort dramatically via PowerShell & Graph automation.',
+                'Prevented unauthorized external data sharing across SharePoint, Teams, OneDrive, and Exchange Online.'
+              ],
+              tech: ['ISO 27001 Controls', 'Microsoft Purview DLP', 'PowerShell', 'Microsoft Graph API', 'Exchange Online PS', 'Access Reviews']
+            }
           ];
-          grid.addEventListener('click', function (e) {
-            var tr = e.target.closest('.js-open-case, .case-card'); if (!tr) return;
-            var item = caseStudies[parseInt(tr.getAttribute('data-case-id'), 10)]; if (!item) return;
+
+          casesGrid.addEventListener('click', function (e) {
+            var trigger = e.target.closest('.js-open-case, .case-card');
+            if (!trigger) return;
+            var item = caseStudies[parseInt(trigger.getAttribute('data-case-id'), 10)];
+            if (!item) return;
+
             document.getElementById('case-modal-tag').textContent = item.tag;
             document.getElementById('case-modal-title').textContent = item.title;
             document.getElementById('case-modal-challenge').textContent = item.challenge;
             document.getElementById('case-modal-solution').textContent = item.solution;
-            var impEl = document.getElementById('case-modal-impact'); impEl.innerHTML = '';
-            for (var i = 0; i < item.impact.length; i++) { var li = document.createElement('li'); li.textContent = item.impact[i]; li.style.marginBottom = '6px'; impEl.appendChild(li); }
-            var techEl = document.getElementById('case-modal-tech'); techEl.innerHTML = '';
-            for (var j = 0; j < item.tech.length; j++) { var sp = document.createElement('span'); sp.className = 'tag'; sp.textContent = item.tech[j]; techEl.appendChild(sp); }
-            document.getElementById('case-modal-wa').href = 'https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent('Hi S M Jobaer Alam, I read your case study "' + item.title + '" on www.jobaeralam.com and would like to discuss a similar project.');
+
+            var impEl = document.getElementById('case-modal-impact');
+            impEl.innerHTML = '';
+            for (var i = 0; i < item.impact.length; i++) {
+              var li = document.createElement('li');
+              li.textContent = item.impact[i];
+              li.style.marginBottom = '6px';
+              impEl.appendChild(li);
+            }
+
+            var techEl = document.getElementById('case-modal-tech');
+            techEl.innerHTML = '';
+            for (var j = 0; j < item.tech.length; j++) {
+              var span = document.createElement('span');
+              span.className = 'tag';
+              span.textContent = item.tech[j];
+              techEl.appendChild(span);
+            }
+
+            var msg = 'Hi S M Jobaer Alam, I read your case study "' + item.title + '" on www.jobaeralam.com and would like to discuss a similar project.';
+            document.getElementById('case-modal-wa').href = 'https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(msg);
             openModal('case-modal');
           });
         }
 
         function initFreeToolsHub() {
-          var toolsGrid = document.getElementById('tools-grid'), filterWrap = document.getElementById('tools-filter-tabs'), customReqBtn = document.getElementById('tools-request-custom-btn');
+          var toolsGrid = document.getElementById('tools-grid');
+          var filterWrap = document.getElementById('tools-filter-tabs');
+          var customReqBtn = document.getElementById('tools-request-custom-btn');
           if (!toolsGrid) return;
+
           var activeToolObj = null;
-          function findToolById(id) { for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) if (FREE_TOOLS_CATALOG[i].id === id) return FREE_TOOLS_CATALOG[i]; return null; }
-          function triggerDirectZipDownload(url, fileName) { var a = document.createElement('a'); a.href = url; a.setAttribute('download', fileName || ''); a.style.display = 'none'; document.body.appendChild(a); a.click(); document.body.removeChild(a); }
+
+          function findToolById(id) {
+            for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) {
+              if (FREE_TOOLS_CATALOG[i].id === id) return FREE_TOOLS_CATALOG[i];
+            }
+            return null;
+          }
+
+          function triggerDirectZipDownload(url, fileName) {
+            var a = document.createElement('a');
+            a.href = url;
+            a.setAttribute('download', fileName || '');
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+
           function handleToolDownload(tool) {
             if (!tool) return;
             if (tool.isLiveFile && tool.downloadUrl) {
               var resolvedUrl = tool.downloadUrl;
-              if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && resolvedUrl.indexOf('http') !== 0 && resolvedUrl.charAt(0) !== '/') {
+              if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.self === window.top && resolvedUrl.indexOf('http') !== 0 && resolvedUrl.charAt(0) !== '/') {
                 resolvedUrl = '/' + resolvedUrl;
               }
-              if (window.location.protocol === 'file:') { triggerDirectZipDownload(resolvedUrl, tool.fileName); showToast('Downloading ' + tool.fileName + '...'); return; }
+              if (window.location.protocol === 'file:') {
+                triggerDirectZipDownload(resolvedUrl, tool.fileName);
+                showToast('Downloading ' + tool.fileName + '...');
+                return;
+              }
               showToast('Preparing download: ' + tool.fileName + '...');
-              fetch(resolvedUrl, { method: 'HEAD', cache: 'no-store' }).then(function (res) {
-                if (res.ok) { triggerDirectZipDownload(resolvedUrl, tool.fileName); showToast('Downloading ' + tool.fileName + ' (' + tool.version + ')'); }
-                else { showToast('File not uploaded yet: add ' + tool.downloadUrl + ' to your GitHub repo.'); }
-              }).catch(function () { triggerDirectZipDownload(resolvedUrl, tool.fileName); showToast('Starting free download: ' + tool.fileName); });
+              fetch(resolvedUrl, { method: 'HEAD', cache: 'no-store' })
+                .then(function (res) {
+                  if (res.ok) {
+                    triggerDirectZipDownload(resolvedUrl, tool.fileName);
+                    showToast('Downloading ' + tool.fileName + ' (' + tool.version + ')');
+                  } else {
+                    showToast('File not uploaded yet: add ' + tool.downloadUrl + ' to your GitHub repo.');
+                  }
+                })
+                .catch(function () {
+                  triggerDirectZipDownload(resolvedUrl, tool.fileName);
+                  showToast('Starting free download: ' + tool.fileName);
+                });
             }
           }
+
           function prefillCustomToolInquiry(toolName) {
             closeModal('tool-modal');
-            var cType = document.getElementById('contact-type'), cDetails = document.getElementById('contact-details');
-            if (cType) { cType.value = 'Microsoft 365 Consulting'; refreshContactSuggestions(); }
-            if (cDetails) cDetails.value = toolName ? 'Hi S M Jobaer Alam,\n\nI downloaded "' + toolName + '" from www.jobaeralam.com and would like to discuss a custom version or enterprise deployment for our organization.' : 'Hi S M Jobaer Alam,\n\nI visited your Free Tools & Software section on www.jobaeralam.com and would like to commission a custom IT automation tool / PowerShell module.';
-            var sec = document.getElementById('contact'); if (sec) sec.scrollIntoView({ behavior: 'smooth' });
+            var cType = document.getElementById('contact-type');
+            var cDetails = document.getElementById('contact-details');
+            if (cType) {
+              cType.value = 'Microsoft 365 Consulting';
+              refreshContactSuggestions();
+            }
+            if (cDetails) {
+              cDetails.value = toolName
+                ? 'Hi S M Jobaer Alam,\n\nI downloaded "' + toolName + '" from www.jobaeralam.com and would like to discuss a custom version or enterprise deployment for our organization.\n\nPlease share your availability and engagement options.'
+                : 'Hi S M Jobaer Alam,\n\nI visited your Free Tools & Software section on www.jobaeralam.com and would like to commission a custom IT automation tool or enterprise application for our organization.\n\nPlease share your availability to discuss requirements.';
+            }
+            var contactSec = document.getElementById('contact');
+            if (contactSec) contactSec.scrollIntoView({ behavior: 'smooth' });
             showToast('Custom tool inquiry loaded into Contact Form');
           }
+
           function openToolModal(tool) {
-            if (!tool) return; activeToolObj = tool;
+            if (!tool) return;
+            activeToolObj = tool;
             document.getElementById('tool-modal-cat').textContent = tool.categoryLabel;
             document.getElementById('tool-modal-ver').textContent = tool.version;
             document.getElementById('tool-modal-title').textContent = tool.name;
@@ -1666,41 +2184,105 @@
             document.getElementById('tool-modal-reqs').textContent = tool.requirements + ' • ' + tool.size + ' • ' + tool.license;
             document.getElementById('tool-modal-usage').textContent = tool.usage;
             document.getElementById('tool-modal-sha').textContent = tool.sha256;
-            var featEl = document.getElementById('tool-modal-features'); featEl.innerHTML = '';
-            for (var i = 0; i < tool.features.length; i++) { var li = document.createElement('li'); li.textContent = tool.features[i]; li.style.marginBottom = '6px'; featEl.appendChild(li); }
+
+            var featEl = document.getElementById('tool-modal-features');
+            featEl.innerHTML = '';
+            for (var i = 0; i < tool.features.length; i++) {
+              var li = document.createElement('li');
+              li.textContent = tool.features[i];
+              li.style.marginBottom = '6px';
+              featEl.appendChild(li);
+            }
             openModal('tool-modal');
           }
-          function renderTools(cat) {
+
+          function renderTools(filterCat) {
             toolsGrid.innerHTML = '';
             for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) {
-              var t = FREE_TOOLS_CATALOG[i]; if (cat !== 'all' && t.category !== cat) continue;
-              var card = document.createElement('article'); card.className = 'card tool-card';
-              card.innerHTML = '<div><div class="tool-top"><span class="case-badge">' + t.categoryLabel + '</span><div class="tool-badges"><span class="tool-free-pill">FREE</span><span class="tool-ver-pill">' + t.version + '</span></div></div><h3 class="tool-title">' + t.name + '</h3><p class="tool-desc">' + t.shortDesc + '</p><div class="tool-meta-bar"><span><strong>Size:</strong> ' + t.size + '</span><span><strong>License:</strong> ' + t.license + '</span></div></div><div class="tool-actions"><button type="button" class="btn btn-emerald btn-sm btn-dl js-tool-download" data-tool-id="' + t.id + '"><svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>Download Free</span></button><button type="button" class="btn btn-secondary btn-sm js-tool-details" data-tool-id="' + t.id + '">Details</button><button type="button" class="btn btn-subtle btn-sm js-tool-sha" data-tool-id="' + t.id + '" title="Copy SHA-256 Checksum">SHA-256</button></div>';
+              var tool = FREE_TOOLS_CATALOG[i];
+              if (filterCat !== 'all' && tool.category !== filterCat) continue;
+
+              var card = document.createElement('article');
+              card.className = 'card tool-card';
+              card.innerHTML = [
+                '<div>',
+                  '<div class="tool-top">',
+                    '<span class="case-badge">' + tool.categoryLabel + '</span>',
+                    '<div class="tool-badges">',
+                      '<span class="tool-free-pill">FREE</span>',
+                      '<span class="tool-ver-pill">' + tool.version + '</span>',
+                    '</div>',
+                  '</div>',
+                  '<h3 class="tool-title">' + tool.name + '</h3>',
+                  '<p class="tool-desc">' + tool.shortDesc + '</p>',
+                  '<div class="tool-meta-bar">',
+                    '<span><strong>Size:</strong> ' + tool.size + '</span>',
+                    '<span><strong>License:</strong> ' + tool.license + '</span>',
+                  '</div>',
+                '</div>',
+                '<div class="tool-actions">',
+                  '<button type="button" class="btn btn-emerald btn-sm btn-dl js-tool-download" data-tool-id="' + tool.id + '">',
+                    '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+                    '<span>Download Free</span>',
+                  '</button>',
+                  '<button type="button" class="btn btn-secondary btn-sm js-tool-details" data-tool-id="' + tool.id + '">Details</button>',
+                  '<button type="button" class="btn btn-subtle btn-sm js-tool-sha" data-tool-id="' + tool.id + '" title="Copy SHA-256 Checksum">SHA-256</button>',
+                '</div>'
+              ].join('');
               toolsGrid.appendChild(card);
             }
           }
-          if (filterWrap) filterWrap.addEventListener('click', function (e) {
-            var tab = e.target.closest('.filter-tab'); if (!tab) return;
-            var all = filterWrap.querySelectorAll('.filter-tab'); for (var i = 0; i < all.length; i++) all[i].classList.toggle('active', all[i] === tab);
-            renderTools(tab.getAttribute('data-tool-filter') || 'all');
-          });
+
+          if (filterWrap) {
+            filterWrap.addEventListener('click', function (e) {
+              var tab = e.target.closest('.filter-tab');
+              if (!tab) return;
+              var filterVal = tab.getAttribute('data-tool-filter') || 'all';
+              var allTabs = filterWrap.querySelectorAll('.filter-tab');
+              for (var i = 0; i < allTabs.length; i++) allTabs[i].classList.toggle('active', allTabs[i] === tab);
+              renderTools(filterVal);
+            });
+          }
+
           toolsGrid.addEventListener('click', function (e) {
-            var dl = e.target.closest('.js-tool-download'); if (dl) { handleToolDownload(findToolById(dl.getAttribute('data-tool-id'))); return; }
-            var det = e.target.closest('.js-tool-details'); if (det) { openToolModal(findToolById(det.getAttribute('data-tool-id'))); return; }
-            var sha = e.target.closest('.js-tool-sha'); if (sha) { var t = findToolById(sha.getAttribute('data-tool-id')); if (t) copyToClipboard(t.sha256, 'Copied SHA-256 for ' + t.name); }
+            var dlBtn = e.target.closest('.js-tool-download');
+            if (dlBtn) { handleToolDownload(findToolById(dlBtn.getAttribute('data-tool-id'))); return; }
+            var detBtn = e.target.closest('.js-tool-details');
+            if (detBtn) { openToolModal(findToolById(detBtn.getAttribute('data-tool-id'))); return; }
+            var shaBtn = e.target.closest('.js-tool-sha');
+            if (shaBtn) {
+              var t = findToolById(shaBtn.getAttribute('data-tool-id'));
+              if (t) copyToClipboard(t.sha256, 'Copied SHA-256 for ' + t.name);
+            }
           });
+
           document.getElementById('tool-modal-download-btn').addEventListener('click', function () { handleToolDownload(activeToolObj); });
           document.getElementById('tool-modal-copy-sha').addEventListener('click', function () { if (activeToolObj) copyToClipboard(activeToolObj.sha256, 'Copied SHA-256 checksum!'); });
           document.getElementById('tool-modal-custom-btn').addEventListener('click', function () { prefillCustomToolInquiry(activeToolObj ? activeToolObj.name : ''); });
           if (customReqBtn) customReqBtn.addEventListener('click', function () { prefillCustomToolInquiry(''); });
+
           renderTools('all');
         }
 
         function initContactForm() {
-          var form = document.getElementById('contact-form'), cName = document.getElementById('contact-name'), cEmail = document.getElementById('contact-email'), cComp = document.getElementById('contact-company'), cType = document.getElementById('contact-type'), cDetails = document.getElementById('contact-details'), cBot = document.getElementById('contact-botcheck'), sLabel = document.getElementById('suggestions-label'), sCont = document.getElementById('suggestions-container'), sBtn = document.getElementById('contact-submit-btn'), sBanner = document.getElementById('contact-status-banner'), sTitle = document.getElementById('contact-status-title'), sMsg = document.getElementById('contact-status-msg'), dPanel = document.getElementById('contact-dispatch-panel');
-          if (!form || !cType || !cDetails) return;
+          var form = document.getElementById('contact-form');
+          var contactName = document.getElementById('contact-name');
+          var contactEmail = document.getElementById('contact-email');
+          var contactCompany = document.getElementById('contact-company');
+          var contactType = document.getElementById('contact-type');
+          var contactDetails = document.getElementById('contact-details');
+          var contactBotcheck = document.getElementById('contact-botcheck');
+          var suggestionsLabel = document.getElementById('suggestions-label');
+          var suggestionsContainer = document.getElementById('suggestions-container');
+          var submitBtn = document.getElementById('contact-submit-btn');
+          var statusBanner = document.getElementById('contact-status-banner');
+          var statusTitle = document.getElementById('contact-status-title');
+          var statusMsg = document.getElementById('contact-status-msg');
+          var dispatchPanel = document.getElementById('contact-dispatch-panel');
 
-          var fullM365Template = [
+          if (!form || !contactType || !contactDetails) return;
+
+          var fullM365ConfigAdminTemplate = [
             'We are looking for Microsoft 365 Consulting, Configuration & Administration Services covering the following areas:',
             '• Microsoft 365 Setup & Configuration (tenant setup, domain verification, DNS, licensing)',
             '• Microsoft 365 Deployment & Migration (Google Workspace / on-premises Exchange / tenant-to-tenant migration)',
@@ -1715,110 +2297,301 @@
           ].join('\n');
 
           var inquirySuggestions = {
-            'US Full-Time Remote Job Opportunity': { placeholder: 'Describe the US remote role, tech stack (M365/Azure/Security), time zone (ET/CT/PT), and target start date...', prompts: [{ label: 'Senior M365 & Entra ID Engineer (US Remote)', text: 'We are hiring a Senior Microsoft 365 & Entra ID Engineer (US Remote) to lead Zero Trust security, Conditional Access, PIM, and Intune endpoint governance. Please share your availability this week for a technical interview.' }, { label: 'Cloud Security Architect (Defender XDR & Sentinel)', text: 'We have a US Remote opening for a Microsoft Security Architect focused on Defender XDR, Microsoft Sentinel SIEM, Purview DLP, and ISO 27001 controls. Would love to discuss the role and compensation.' }, { label: 'Azure Hybrid & Infrastructure Engineer', text: 'Seeking an experienced US Remote Azure & Hybrid Infrastructure Engineer to oversee migrations, Windows Server/AD hybrid operations, and PowerShell/Microsoft Graph automation.' }] },
-            'US On-Premises / Relocation Role': { placeholder: 'Share the US office location, on-premises/hybrid schedule, relocation/sponsorship support, and core scope...', prompts: [{ label: 'On-Site / Hybrid Cloud & Security Architect', text: 'We are recruiting for a US On-Site / Hybrid Cloud & Security Architect (relocation support available) to lead Microsoft 365, Azure Firewall, and Zero Trust initiatives. Let us schedule an introductory call.' }, { label: 'Enterprise IT Infrastructure Manager', text: 'Looking for an Enterprise IT Infrastructure Manager (US On-Premises / Hybrid) to lead multi-site Windows Server, Active Directory, Hyper-V/VMware, and Azure Hybrid operations.' }, { label: 'Microsoft SecOps Lead (Defender & Sentinel)', text: 'We have a US On-Premises / Hybrid Microsoft Security Operations Lead role managing Defender XDR, Sentinel incident response, vulnerability management, and ISO 27001 audits.' }] },
-            'Freelance Project (Upwork / Fiverr / Direct)': { placeholder: 'Outline deliverables, preferred platform (Upwork/Fiverr/Direct), approximate user/device count, and deadline...', prompts: [{ label: 'Exchange Online & SPF/DKIM/DMARC Hardening', text: 'We need a freelance specialist to audit and harden Exchange Online mail flow, configure strict SPF/DKIM/DMARC DNS records, and resolve email spoofing issues within 1–2 weeks.' }, { label: 'Intune MDM, BitLocker & Defender Rollout', text: 'Looking to hire you for a fixed-scope project to deploy Microsoft Intune MDM, BitLocker encryption, and Defender for Endpoint across our Windows fleet (50–500 devices) with SOP documentation.' }, { label: 'PowerShell & Graph Lifecycle Automation', text: 'We want to automate user onboarding, offboarding, mailbox conversion, and M365 license reporting using PowerShell and Microsoft Graph API. Please share your estimate and preferred platform.' }] },
-            'Microsoft 365 Consulting': { placeholder: 'Select a Microsoft 365 consulting/configuration prompt above or describe your tenant size, migration/security goals, and timeline...', prompts: [{ label: '★ Full M365 Configuration & Administration Suite', featured: true, text: fullM365Template }, { label: 'M365 Setup, Deployment & Migration', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft 365 Setup & Configuration (tenant setup, domain verification, DNS, licensing)\n• Microsoft 365 Deployment & Migration (Google Workspace / on-premises Exchange / tenant-to-tenant migration)\n\nPlease share your migration approach, downtime minimization plan, and timeline.' }, { label: 'Teams, SharePoint & OneDrive Config', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft Teams Configuration (voice, policies, channels, external access & governance)\n• SharePoint & OneDrive Configuration (site architecture, permissions, sharing controls, sync & retention)\n\nPlease share your availability for a scoping call.' }, { label: 'Exchange Online & Mail Flow Optimization', text: 'We are looking for a Microsoft 365 consultant to configure and optimize Exchange Online mailboxes, mail-flow rules, SPF/DKIM/DMARC authentication, anti-phishing policies, and Defender for Office 365 protection.' }, { label: 'Entra ID, Zero Trust & Tenant Security Audit', text: 'We need a Microsoft 365 consulting engagement to conduct a Tenant Security & Zero Trust Audit, configure Microsoft Entra ID (MFA, Conditional Access, PIM, Intune), optimize licenses, and close compliance gaps.' }, { label: 'M365 Governance, Business Solutions & Support', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft 365 Business Solutions (PowerShell/Graph automation, Purview DLP, sensitivity labels & Copilot readiness)\n• Microsoft 365 Troubleshooting & Support (root-cause resolution, escalations, ongoing administration & SLA support)\n\nPlease share your project or ongoing support engagement options.' }] },
-            'Enterprise Cloud / Security Consulting': { placeholder: 'Share your current cloud/security posture, compliance targets (ISO 27001/Zero Trust), and key priorities...', prompts: [{ label: 'Zero Trust Architecture Assessment', text: 'We are seeking an executive Zero Trust assessment covering Microsoft Entra ID, Conditional Access, PIM, and Defender XDR to close security gaps and build a clear remediation roadmap.' }, { label: 'ISO 27001 Readiness & Purview DLP', text: 'Our organization is preparing for an ISO 27001 audit and needs consulting support for access reviews, risk registers, Microsoft Purview DLP policies, and audit evidence documentation.' }, { label: 'Azure/AWS FinOps, DR & FortiGate VPN', text: 'We need consulting assistance to optimize monthly Azure and AWS cloud spend, strengthen backup/DR plans, and modernize our multi-site FortiGate and Azure Firewall VPN architecture.' }] }
+            'US Full-Time Remote Job Opportunity': {
+              placeholder: 'Describe the US remote role, tech stack (M365/Azure/Security), time zone (ET/CT/PT), and target start date...',
+              prompts: [
+                { label: 'Senior M365 & Entra ID Engineer (US Remote)', text: 'We are hiring a Senior Microsoft 365 & Entra ID Engineer (US Remote) to lead Zero Trust security, Conditional Access, PIM, and Intune endpoint governance. Please share your availability this week for a technical interview.' },
+                { label: 'Cloud Security Architect (Defender XDR & Sentinel)', text: 'We have a US Remote opening for a Microsoft Security Architect focused on Defender XDR, Microsoft Sentinel SIEM, Purview DLP, and ISO 27001 controls. Would love to discuss the role and compensation.' },
+                { label: 'Azure Hybrid & Infrastructure Engineer', text: 'Seeking an experienced US Remote Azure & Hybrid Infrastructure Engineer to oversee migrations, Windows Server/AD hybrid operations, and PowerShell/Microsoft Graph automation.' }
+              ]
+            },
+            'US On-Premises / Relocation Role': {
+              placeholder: 'Share the US office location, on-premises/hybrid schedule, relocation/sponsorship support, and core scope...',
+              prompts: [
+                { label: 'On-Site / Hybrid Cloud & Security Architect', text: 'We are recruiting for a US On-Site / Hybrid Cloud & Security Architect (relocation support available) to lead Microsoft 365, Azure Firewall, and Zero Trust initiatives. Let us schedule an introductory call.' },
+                { label: 'Enterprise IT Infrastructure Manager', text: 'Looking for an Enterprise IT Infrastructure Manager (US On-Premises / Hybrid) to lead multi-site Windows Server, Active Directory, Hyper-V/VMware, and Azure Hybrid operations.' },
+                { label: 'Microsoft SecOps Lead (Defender & Sentinel)', text: 'We have a US On-Premises / Hybrid Microsoft Security Operations Lead role managing Defender XDR, Sentinel incident response, vulnerability management, and ISO 27001 audits.' }
+              ]
+            },
+            'Freelance Project (Upwork / Fiverr / Direct)': {
+              placeholder: 'Outline deliverables, preferred platform (Upwork/Fiverr/Direct), approximate user/device count, and deadline...',
+              prompts: [
+                { label: 'Exchange Online & SPF/DKIM/DMARC Hardening', text: 'We need a freelance specialist to audit and harden Exchange Online mail flow, configure strict SPF/DKIM/DMARC DNS records, and resolve email spoofing issues within 1–2 weeks.' },
+                { label: 'Intune MDM, BitLocker & Defender Rollout', text: 'Looking to hire you for a fixed-scope project to deploy Microsoft Intune MDM, BitLocker encryption, and Defender for Endpoint across our Windows fleet (50–500 devices) with SOP documentation.' },
+                { label: 'PowerShell & Graph Lifecycle Automation', text: 'We want to automate user onboarding, offboarding, mailbox conversion, and M365 license reporting using PowerShell and Microsoft Graph API. Please share your estimate and preferred platform.' }
+              ]
+            },
+            'Microsoft 365 Consulting': {
+              placeholder: 'Select a Microsoft 365 consulting/configuration prompt above or describe your tenant size, migration/security goals, and timeline...',
+              prompts: [
+                { label: '★ Full M365 Configuration & Administration Suite', featured: true, text: fullM365ConfigAdminTemplate },
+                { label: 'M365 Setup, Deployment & Migration', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft 365 Setup & Configuration (tenant setup, domain verification, DNS, licensing)\n• Microsoft 365 Deployment & Migration (Google Workspace / on-premises Exchange / tenant-to-tenant migration)\n\nPlease share your migration approach, downtime minimization plan, and timeline.' },
+                { label: 'Teams, SharePoint & OneDrive Config', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft Teams Configuration (voice, policies, channels, external access & governance)\n• SharePoint & OneDrive Configuration (site architecture, permissions, sharing controls, sync & retention)\n\nPlease share your availability for a scoping call.' },
+                { label: 'Exchange Online & Mail Flow Optimization', text: 'We are looking for a Microsoft 365 consultant to configure and optimize Exchange Online mailboxes, mail-flow rules, SPF/DKIM/DMARC authentication, anti-phishing policies, and Defender for Office 365 protection.' },
+                { label: 'Entra ID, Zero Trust & Tenant Security Audit', text: 'We need a Microsoft 365 consulting engagement to conduct a Tenant Security & Zero Trust Audit, configure Microsoft Entra ID (MFA, Conditional Access, PIM, Intune), optimize licenses, and close compliance gaps.' },
+                { label: 'M365 Governance, Business Solutions & Support', text: 'We need Microsoft 365 consulting assistance with:\n• Microsoft 365 Business Solutions (PowerShell/Graph automation, Purview DLP, sensitivity labels & Copilot readiness)\n• Microsoft 365 Troubleshooting & Support (root-cause resolution, escalations, ongoing administration & SLA support)\n\nPlease share your project or ongoing support engagement options.' }
+              ]
+            },
+            'Enterprise Cloud / Security Consulting': {
+              placeholder: 'Share your current cloud/security posture, compliance targets (ISO 27001/Zero Trust), and key priorities...',
+              prompts: [
+                { label: 'Zero Trust Architecture Assessment', text: 'We are seeking an executive Zero Trust assessment covering Microsoft Entra ID, Conditional Access, PIM, and Defender XDR to close security gaps and build a clear remediation roadmap.' },
+                { label: 'ISO 27001 Readiness & Purview DLP', text: 'Our organization is preparing for an ISO 27001 audit and needs consulting support for access reviews, risk registers, Microsoft Purview DLP policies, and audit evidence documentation.' },
+                { label: 'Azure/AWS FinOps, DR & FortiGate VPN', text: 'We need consulting assistance to optimize monthly Azure and AWS cloud spend, strengthen backup/DR plans, and modernize our multi-site FortiGate and Azure Firewall VPN architecture.' }
+              ]
+            }
           };
 
           function renderSuggestions() {
-            var sel = cType.value, cfg = inquirySuggestions[sel] || inquirySuggestions['US Full-Time Remote Job Opportunity'];
-            if (sLabel) sLabel.textContent = 'Suggested Prompts — ' + sel;
-            cDetails.placeholder = cfg.placeholder;
-            if (!sCont) return;
-            sCont.innerHTML = '';
-            for (var i = 0; i < cfg.prompts.length; i++) {
-              (function (p) {
+            var selected = contactType.value;
+            var config = inquirySuggestions[selected] || inquirySuggestions['US Full-Time Remote Job Opportunity'];
+            if (suggestionsLabel) suggestionsLabel.textContent = 'Suggested Prompts — ' + selected;
+            contactDetails.placeholder = config.placeholder;
+            if (!suggestionsContainer) return;
+
+            suggestionsContainer.innerHTML = '';
+            for (var i = 0; i < config.prompts.length; i++) {
+              (function (promptObj) {
                 var chip = document.createElement('button');
                 chip.type = 'button';
-                chip.className = 'suggestion-chip' + (p.featured ? ' featured' : '');
-                chip.textContent = p.label;
+                chip.className = 'suggestion-chip' + (promptObj.featured ? ' featured' : '');
+                chip.textContent = promptObj.label;
                 chip.addEventListener('click', function () {
-                  cDetails.value = p.text; cDetails.focus();
-                  var all = sCont.querySelectorAll('.suggestion-chip'); for (var k = 0; k < all.length; k++) all[k].classList.remove('active');
-                  chip.classList.add('active'); showToast('Inserted prompt into Project or Role Details');
+                  contactDetails.value = promptObj.text;
+                  contactDetails.focus();
+                  var allChips = suggestionsContainer.querySelectorAll('.suggestion-chip');
+                  for (var k = 0; k < allChips.length; k++) allChips[k].classList.remove('active');
+                  chip.classList.add('active');
+                  showToast('Inserted prompt into Project or Role Details');
                 });
-                sCont.appendChild(chip);
-              })(cfg.prompts[i]);
+                suggestionsContainer.appendChild(chip);
+              })(config.prompts[i]);
             }
           }
+
           refreshContactSuggestions = renderSuggestions;
-          cType.addEventListener('change', renderSuggestions);
+          contactType.addEventListener('change', renderSuggestions);
           renderSuggestions();
 
-          function getPayload() {
-            var name = cName.value.trim(), email = cEmail.value.trim(), company = cComp.value.trim(), type = cType.value, details = cDetails.value.trim();
+          function getFormPayload() {
+            var name = contactName ? contactName.value.trim() : '';
+            var email = contactEmail ? contactEmail.value.trim() : '';
+            var company = contactCompany ? contactCompany.value.trim() : '';
+            var type = contactType.value;
+            var details = contactDetails.value.trim();
+
             return {
-              name: name, email: email, company: company, type: type, details: details,
+              name: name,
+              email: email,
+              company: company,
+              type: type,
+              details: details,
               subject: '[www.jobaeralam.com] ' + type + (name ? ' — ' + name : ''),
-              body: ['Hello S M Jobaer Alam,', '', 'Inquiry Type: ' + type, 'Name: ' + (name || 'Not provided'), 'Email: ' + (email || 'Not provided'), 'Company / Platform: ' + (company || 'Not provided'), '', 'Project / Role Details:', details || '(Please add project or role details)', '', 'Sent via www.jobaeralam.com'].join('\n')
+              body: [
+                'Hello S M Jobaer Alam,',
+                '',
+                'Inquiry Type: ' + type,
+                'Name: ' + (name || 'Not provided'),
+                'Email: ' + (email || 'Not provided'),
+                'Company / Platform: ' + (company || 'Not provided'),
+                '',
+                'Project / Role Details:',
+                details || '(Please add project or role details)',
+                '',
+                'Sent via www.jobaeralam.com'
+              ].join('\n')
             };
           }
-          function showStatus(k, t, m, d) { sBanner.className = 'status-banner show status-' + k; sTitle.textContent = t; sMsg.textContent = m; dPanel.classList.toggle('show', !!d); }
-          function openOutlook(p) { window.open(EMAIL_CONFIG.outlookWebCompose + '?to=' + encodeURIComponent(EMAIL_CONFIG.recipientEmail) + '&subject=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
-          function openGmail(p) { window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL_CONFIG.recipientEmail) + '&su=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
+
+          function showStatus(kind, title, msg, showDispatch) {
+            if (statusBanner && statusTitle && statusMsg) {
+              statusBanner.className = 'status-banner show status-' + kind;
+              statusTitle.textContent = title;
+              statusMsg.textContent = msg;
+            }
+            if (dispatchPanel) dispatchPanel.classList.toggle('show', !!showDispatch);
+          }
+
+          function openOutlookWeb(p) { window.open(EMAIL_CONFIG.outlookWebCompose + '?to=' + encodeURIComponent(EMAIL_CONFIG.recipientEmail) + '&subject=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
+          function openGmailWeb(p) { window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(EMAIL_CONFIG.recipientEmail) + '&su=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
           function openMailto(p) { window.location.href = 'mailto:' + EMAIL_CONFIG.recipientEmail + '?subject=' + encodeURIComponent(p.subject) + '&body=' + encodeURIComponent(p.body); }
-          function openWa(p) { window.open('https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
+          function openWhatsApp(p) { window.open('https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(p.body), '_blank', 'noopener,noreferrer'); }
 
           form.addEventListener('submit', function (e) {
-            e.preventDefault(); if (cBot && cBot.checked) return;
-            var p = getPayload();
-            if (!p.name) { showStatus('warning', 'Missing Name', 'Please enter your full name before sending.', false); cName.focus(); return; }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(p.email)) { showStatus('warning', 'Valid Email Required', 'Please enter a valid email address so S M Jobaer Alam can reply directly.', false); cEmail.focus(); return; }
-            if (!p.details) { showStatus('warning', 'Missing Details', 'Please enter your project or role details (or click a Suggested Prompt above).', false); cDetails.focus(); return; }
-            if (window.location.protocol === 'file:' || !navigator.onLine) { showStatus('info', 'Local Preview / Offline Mode Detected', 'Direct Web3Forms API delivery activates automatically when hosted on https://www.jobaeralam.com. Use any pre-filled option below to send immediately:', true); return; }
-            sBtn.disabled = true; sBtn.textContent = 'Sending Inquiry...';
-            fetch(EMAIL_CONFIG.web3formsEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: JSON.stringify({ access_key: EMAIL_CONFIG.web3formsAccessKey, subject: p.subject, from_name: p.name + ' (www.jobaeralam.com)', replyto: p.email, name: p.name, email: p.email, company: p.company || 'Not specified', inquiry_type: p.type, message: p.details, botcheck: '' }) })
-              .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
-              .then(function (res) {
-                if (res.ok && res.data && res.data.success) { showStatus('success', 'Inquiry Sent to hello@jobaeralam.com!', 'Thank you, ' + p.name + '. Your message has been delivered directly to S M Jobaer Alam’s Microsoft 365 inbox.', false); showToast('Inquiry delivered to hello@jobaeralam.com!'); form.reset(); renderSuggestions(); }
-                else { showStatus('warning', 'Direct API Delivery Unavailable', 'Your inquiry is preserved and pre-filled below. Send it in one click via Outlook Web, Gmail, Desktop Mail, or WhatsApp:', true); }
+            e.preventDefault();
+            if (contactBotcheck && contactBotcheck.checked) return;
+
+            var payload = getFormPayload();
+            if (!payload.name) { showStatus('warning', 'Missing Name', 'Please enter your full name before sending.', false); contactName.focus(); return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) { showStatus('warning', 'Valid Email Required', 'Please enter a valid email address so S M Jobaer Alam can reply directly.', false); contactEmail.focus(); return; }
+            if (!payload.details) { showStatus('warning', 'Missing Details', 'Please enter your project or role details (or click a Suggested Prompt above).', false); contactDetails.focus(); return; }
+
+            if (window.location.protocol === 'file:' || !navigator.onLine) {
+              showStatus('info', 'Local Preview / Offline Mode Detected', 'Direct Web3Forms API delivery activates automatically when hosted on https://www.jobaeralam.com. Use any pre-filled option below to send immediately:', true);
+              return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending Inquiry...';
+
+            fetch(EMAIL_CONFIG.web3formsEndpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+              body: JSON.stringify({
+                access_key: EMAIL_CONFIG.web3formsAccessKey,
+                subject: payload.subject,
+                from_name: payload.name + ' (www.jobaeralam.com)',
+                replyto: payload.email,
+                name: payload.name,
+                email: payload.email,
+                company: payload.company || 'Not specified',
+                inquiry_type: payload.type,
+                message: payload.details,
+                botcheck: ''
               })
-              .catch(function () { showStatus('warning', 'Network Blocked Automatic Delivery', 'Your inquiry is ready below. Send it directly using Outlook Web, Gmail Web, or WhatsApp:', true); })
-              .finally(function () { sBtn.disabled = false; sBtn.textContent = 'Send via Email (hello@jobaeralam.com)'; });
+            })
+              .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+              .then(function (result) {
+                if (result.ok && result.data && result.data.success) {
+                  showStatus('success', 'Inquiry Sent to hello@jobaeralam.com!', 'Thank you, ' + payload.name + '. Your message has been delivered directly to S M Jobaer Alam’s Microsoft 365 inbox.', false);
+                  showToast('Inquiry delivered to hello@jobaeralam.com!');
+                  form.reset();
+                  renderSuggestions();
+                } else {
+                  var reason = (result.data && result.data.message) ? result.data.message : 'Service returned an error';
+                  showStatus('warning', 'Direct API Delivery Unavailable (' + reason + ')', 'Your inquiry is preserved and pre-filled below. Send it in one click via Outlook Web, Gmail, Desktop Mail, or WhatsApp:', true);
+                }
+              })
+              .catch(function () {
+                showStatus('warning', 'Network / Firewall Blocked Automatic Delivery', 'Your inquiry is ready below. Send it directly using Outlook Web, Gmail Web, or WhatsApp:', true);
+              })
+              .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send via Email (hello@jobaeralam.com)';
+              });
           });
 
-          document.getElementById('contact-send-wa').addEventListener('click', function () { openWa(getPayload()); });
-          document.getElementById('quick-wa-btn').addEventListener('click', function () { openWa(getPayload()); });
-          document.getElementById('quick-outlook-btn').addEventListener('click', function () { openOutlook(getPayload()); });
-          document.getElementById('contact-copy-brief').addEventListener('click', function () { copyToClipboard(getPayload().body, 'Inquiry brief copied!'); });
-          document.getElementById('dispatch-outlook').addEventListener('click', function () { openOutlook(getPayload()); });
-          document.getElementById('dispatch-gmail').addEventListener('click', function () { openGmail(getPayload()); });
-          document.getElementById('dispatch-mailto').addEventListener('click', function () { openMailto(getPayload()); });
-          document.getElementById('dispatch-copy').addEventListener('click', function () { copyToClipboard(getPayload().body, 'Full email message copied!'); });
+          document.getElementById('contact-send-wa').addEventListener('click', function () { openWhatsApp(getFormPayload()); });
+          document.getElementById('quick-wa-btn').addEventListener('click', function () { openWhatsApp(getFormPayload()); });
+          document.getElementById('quick-outlook-btn').addEventListener('click', function () { openOutlookWeb(getFormPayload()); });
+          document.getElementById('contact-copy-brief').addEventListener('click', function () { copyToClipboard(getFormPayload().body, 'Inquiry brief copied!'); });
+          document.getElementById('dispatch-outlook').addEventListener('click', function () { openOutlookWeb(getFormPayload()); });
+          document.getElementById('dispatch-gmail').addEventListener('click', function () { openGmailWeb(getFormPayload()); });
+          document.getElementById('dispatch-mailto').addEventListener('click', function () { openMailto(getFormPayload()); });
+          document.getElementById('dispatch-copy').addEventListener('click', function () { copyToClipboard(getFormPayload().body, 'Full email message copied!'); });
         }
 
         function initScopeBuilder() {
-          var engW = document.getElementById('builder-engagement'), svcW = document.getElementById('builder-services'), timeW = document.getElementById('builder-timeline'), budW = document.getElementById('builder-budget'), prev = document.getElementById('builder-brief-preview');
-          if (!prev) return;
-          var st = { engagement: 'US Remote Full-Time', services: ['Microsoft 365 Consulting', 'Entra ID & Zero Trust'], timeline: 'Immediate / ASAP', budget: "Open / Let's Discuss" };
-          function build() { return ['Hello S M Jobaer Alam,', '', 'I am reaching out via www.jobaeralam.com regarding the following engagement:', '• Engagement Type: ' + st.engagement, '• Focus Areas: ' + (st.services.length ? st.services.join(', ') : 'Microsoft 365 / Azure / Security Consulting'), '• Target Timeline: ' + st.timeline, '• Budget / Compensation: ' + st.budget, '', 'Please share your availability for a brief discovery call or technical interview.'].join('\n'); }
-          function render() { prev.textContent = build(); }
-          function bindSingle(wrap, attr, key) { if (!wrap) return; wrap.addEventListener('click', function (e) { var c = e.target.closest('.choice-chip'); if (!c) return; st[key] = c.getAttribute(attr) || st[key]; var all = wrap.querySelectorAll('.choice-chip'); for (var i = 0; i < all.length; i++) all[i].classList.toggle('active', all[i] === c); render(); }); }
-          bindSingle(engW, 'data-eng', 'engagement'); bindSingle(timeW, 'data-timeline', 'timeline'); bindSingle(budW, 'data-budget', 'budget');
-          if (svcW) svcW.addEventListener('click', function (e) { var c = e.target.closest('.choice-chip'); if (!c) return; var v = c.getAttribute('data-service'), idx = st.services.indexOf(v); if (idx > -1) { st.services.splice(idx, 1); c.classList.remove('active'); } else { st.services.push(v); c.classList.add('active'); } render(); });
+          var engWrap = document.getElementById('builder-engagement');
+          var svcWrap = document.getElementById('builder-services');
+          var timeWrap = document.getElementById('builder-timeline');
+          var budgetWrap = document.getElementById('builder-budget');
+          var previewEl = document.getElementById('builder-brief-preview');
+          if (!previewEl) return;
+
+          var state = {
+            engagement: 'US Remote Full-Time',
+            services: ['Microsoft 365 Consulting', 'Entra ID & Zero Trust'],
+            timeline: 'Immediate / ASAP',
+            budget: "Open / Let's Discuss"
+          };
+
+          function buildBrief() {
+            var svcText = state.services.length ? state.services.join(', ') : 'Microsoft 365 / Azure / Security Consulting';
+            return [
+              'Hello S M Jobaer Alam,',
+              '',
+              'I am reaching out via www.jobaeralam.com regarding the following engagement:',
+              '• Engagement Type: ' + state.engagement,
+              '• Focus Areas: ' + svcText,
+              '• Target Timeline: ' + state.timeline,
+              '• Budget / Compensation: ' + state.budget,
+              '',
+              'Please share your availability for a brief discovery call or technical interview.'
+            ].join('\n');
+          }
+
+          function renderBrief() { previewEl.textContent = buildBrief(); }
+
+          function bindSingle(wrap, attr, key) {
+            if (!wrap) return;
+            wrap.addEventListener('click', function (e) {
+              var chip = e.target.closest('.choice-chip');
+              if (!chip) return;
+              state[key] = chip.getAttribute(attr) || state[key];
+              var all = wrap.querySelectorAll('.choice-chip');
+              for (var i = 0; i < all.length; i++) all[i].classList.toggle('active', all[i] === chip);
+              renderBrief();
+            });
+          }
+
+          bindSingle(engWrap, 'data-eng', 'engagement');
+          bindSingle(timeWrap, 'data-timeline', 'timeline');
+          bindSingle(budgetWrap, 'data-budget', 'budget');
+
+          if (svcWrap) {
+            svcWrap.addEventListener('click', function (e) {
+              var chip = e.target.closest('.choice-chip');
+              if (!chip) return;
+              var val = chip.getAttribute('data-service');
+              var idx = state.services.indexOf(val);
+              if (idx > -1) { state.services.splice(idx, 1); chip.classList.remove('active'); }
+              else { state.services.push(val); chip.classList.add('active'); }
+              renderBrief();
+            });
+          }
+
           document.getElementById('builder-load-email').addEventListener('click', function () {
-            var ct = document.getElementById('contact-type'), cd = document.getElementById('contact-details');
-            if (ct) { ct.value = st.engagement.indexOf('Remote') !== -1 ? 'US Full-Time Remote Job Opportunity' : st.engagement.indexOf('On-Premises') !== -1 ? 'US On-Premises / Relocation Role' : st.services.indexOf('Microsoft 365 Consulting') !== -1 ? 'Microsoft 365 Consulting' : 'Freelance Project (Upwork / Fiverr / Direct)'; refreshContactSuggestions(); }
-            if (cd) cd.value = build();
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showToast('Scope brief loaded into Contact Form!');
+            var cType = document.getElementById('contact-type');
+            var cDetails = document.getElementById('contact-details');
+            if (cType) {
+              if (state.engagement.indexOf('Remote') !== -1) cType.value = 'US Full-Time Remote Job Opportunity';
+              else if (state.engagement.indexOf('On-Premises') !== -1) cType.value = 'US On-Premises / Relocation Role';
+              else if (state.services.indexOf('Microsoft 365 Consulting') !== -1) cType.value = 'Microsoft 365 Consulting';
+              else cType.value = 'Freelance Project (Upwork / Fiverr / Direct)';
+              refreshContactSuggestions();
+            }
+            if (cDetails) cDetails.value = buildBrief();
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            showToast('Scope brief loaded into Contact Form!');
           });
-          document.getElementById('builder-send-wa').addEventListener('click', function () { window.open('https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(build()), '_blank', 'noopener,noreferrer'); });
-          document.getElementById('builder-copy').addEventListener('click', function () { copyToClipboard(build(), 'Scope brief copied to clipboard!'); });
-          var pBtns = document.querySelectorAll('.js-platform-prefill');
-          for (var p = 0; p < pBtns.length; p++) pBtns[p].addEventListener('click', function () {
-            var plat = this.getAttribute('data-platform') || '', inq = this.getAttribute('data-inquiry') || '';
-            var cc = document.getElementById('contact-company'), ct = document.getElementById('contact-type');
-            if (cc && plat) cc.value = plat; if (ct && inq) { ct.value = inq; refreshContactSuggestions(); }
-            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showToast('Selected: ' + plat);
+
+          document.getElementById('builder-send-wa').addEventListener('click', function () {
+            window.open('https://wa.me/' + EMAIL_CONFIG.whatsappNumber + '?text=' + encodeURIComponent(buildBrief()), '_blank', 'noopener,noreferrer');
           });
-          render();
+
+          document.getElementById('builder-copy').addEventListener('click', function () {
+            copyToClipboard(buildBrief(), 'Scope brief copied to clipboard!');
+          });
+
+          var platformBtns = document.querySelectorAll('.js-platform-prefill');
+          for (var p = 0; p < platformBtns.length; p++) {
+            platformBtns[p].addEventListener('click', function () {
+              var plat = this.getAttribute('data-platform') || '';
+              var inq = this.getAttribute('data-inquiry') || '';
+              var cComp = document.getElementById('contact-company');
+              var cType = document.getElementById('contact-type');
+              if (cComp && plat) cComp.value = plat;
+              if (cType && inq) { cType.value = inq; refreshContactSuggestions(); }
+              document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+              showToast('Selected: ' + plat);
+            });
+          }
+
+          renderBrief();
         }
 
         function initFAQ() {
-          var faq = document.getElementById('faq-accordion'); if (!faq) return;
-          faq.addEventListener('click', function (e) { var tr = e.target.closest('.faq-trigger'); if (!tr) return; var item = tr.closest('.faq-item'); if (!item) return; tr.setAttribute('aria-expanded', item.classList.toggle('open') ? 'true' : 'false'); });
+          var faq = document.getElementById('faq-accordion');
+          if (!faq) return;
+          faq.addEventListener('click', function (e) {
+            var trigger = e.target.closest('.faq-trigger');
+            if (!trigger) return;
+            var item = trigger.closest('.faq-item');
+            if (!item) return;
+            var isOpen = item.classList.toggle('open');
+            trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          });
         }
 
         function initResumeHub() {
@@ -1870,15 +2643,58 @@
             '- Languages: English (C1 Fluent), Bangla (Native), Hindi (B1)',
             '- References available upon request.'
           ].join('\n');
-          document.addEventListener('click', function (e) { var tr = e.target.closest('.js-open-resume'); if (!tr) return; e.preventDefault(); openModal('resume-modal'); });
-          document.getElementById('btn-download-html').addEventListener('click', function () {
-            var area = document.getElementById('printable-resume-area'); if (!area) return;
-            var html = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>S M Jobaer Alam — Executive Resume (www.jobaeralam.com)</title><style>body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#0F172A;background:#FFFFFF;margin:0;padding:28px;line-height:1.55;font-size:14px;}.ats-sheet{max-width:800px;margin:0 auto;}.ats-header{border-bottom:2px solid #0F172A;padding-bottom:12px;margin-bottom:16px;}.ats-name{margin:0;font-size:26px;font-weight:800;}.ats-headline{margin:4px 0 8px;font-size:13px;font-weight:700;color:#1D4ED8;text-transform:uppercase;letter-spacing:0.04em;}.ats-contact-line{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:#334155;}.ats-section{margin-bottom:14px;}.ats-section h4{margin:0 0 6px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#1E3A8A;border-bottom:1px solid #CBD5E1;padding-bottom:3px;}.ats-section p{margin:0 0 6px;}.ats-section ul{margin:4px 0 0;padding-left:18px;}.ats-section li{margin-bottom:4px;}.ats-role-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-weight:700;margin-top:8px;}@media print{body{padding:0;}@page{size:auto;margin:12mm;}}</style></head><body>' + area.innerHTML + '</body></html>';
-            if (triggerFileDownload('S_M_Jobaer_Alam_Resume.html', html, 'text/html;charset=utf-8')) showToast('Downloaded S_M_Jobaer_Alam_Resume.html');
+
+          document.addEventListener('click', function (e) {
+            var trigger = e.target.closest('.js-open-resume');
+            if (!trigger) return;
+            e.preventDefault();
+            openModal('resume-modal');
           });
-          document.getElementById('btn-download-txt').addEventListener('click', function () { if (triggerFileDownload('S_M_Jobaer_Alam_Resume_ATS.txt', atsPlainTextResume, 'text/plain;charset=utf-8')) showToast('Downloaded S_M_Jobaer_Alam_Resume_ATS.txt'); });
+
+          document.getElementById('btn-download-html').addEventListener('click', function () {
+            var area = document.getElementById('printable-resume-area');
+            if (!area) return;
+            var standaloneHtml = [
+              '<!DOCTYPE html>',
+              '<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">',
+              '<title>S M Jobaer Alam — Executive Resume (www.jobaeralam.com)</title>',
+              '<style>',
+              'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:#0F172A;background:#FFFFFF;margin:0;padding:28px;line-height:1.55;font-size:14px;}',
+              '.ats-sheet{max-width:800px;margin:0 auto;}',
+              '.ats-header{border-bottom:2px solid #0F172A;padding-bottom:12px;margin-bottom:16px;}',
+              '.ats-name{margin:0;font-size:26px;font-weight:800;}',
+              '.ats-headline{margin:4px 0 8px;font-size:13px;font-weight:700;color:#1D4ED8;text-transform:uppercase;letter-spacing:0.04em;}',
+              '.ats-contact-line{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:#334155;}',
+              '.ats-section{margin-bottom:14px;}',
+              '.ats-section h4{margin:0 0 6px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:#1E3A8A;border-bottom:1px solid #CBD5E1;padding-bottom:3px;}',
+              '.ats-section p{margin:0 0 6px;}',
+              '.ats-section ul{margin:4px 0 0;padding-left:18px;}',
+              '.ats-section li{margin-bottom:4px;}',
+              '.ats-role-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;font-weight:700;margin-top:8px;}',
+              '@media print{body{padding:0;}@page{size:auto;margin:12mm;}}',
+              '</style></head><body>',
+              area.innerHTML,
+              '</body></html>'
+            ].join('');
+            if (triggerFileDownload('S_M_Jobaer_Alam_Resume.html', standaloneHtml, 'text/html;charset=utf-8')) {
+              showToast('Downloaded S_M_Jobaer_Alam_Resume.html');
+            } else {
+              showToast('Download blocked by browser. Use Print / Save as PDF instead.');
+            }
+          });
+
+          document.getElementById('btn-download-txt').addEventListener('click', function () {
+            if (triggerFileDownload('S_M_Jobaer_Alam_Resume_ATS.txt', atsPlainTextResume, 'text/plain;charset=utf-8')) {
+              showToast('Downloaded S_M_Jobaer_Alam_Resume_ATS.txt');
+            } else {
+              showToast('Download blocked by browser. Use Copy Resume Text instead.');
+            }
+          });
+
           document.getElementById('btn-print-pdf').addEventListener('click', function () { window.print(); });
-          document.getElementById('btn-copy-resume').addEventListener('click', function () { copyToClipboard(atsPlainTextResume, 'Full ATS Resume text copied to clipboard!'); });
+          document.getElementById('btn-copy-resume').addEventListener('click', function () {
+            copyToClipboard(atsPlainTextResume, 'Full ATS Resume text copied to clipboard!');
+          });
         }
 
         function initModals() {
@@ -1887,9 +2703,18 @@
             if (closeBtn) { closeModal(closeBtn.getAttribute('data-modal')); return; }
             if (e.target.classList && e.target.classList.contains('modal-backdrop')) closeModal(e.target.id);
           });
-          document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAllModals(); });
+
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeAllModals();
+          });
         }
-      });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootPortfolio);
+      } else {
+        bootPortfolio();
+      }
     })();
   </script>
 </body>
