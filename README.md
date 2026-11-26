@@ -7,7 +7,8 @@ Official portfolio website for **S M Jobaer Alam** (`www.jobaeralam.com` | `hell
 ```
 jobaeralam-portfolio-project/
 ├── index.html                           # Complete self-contained portfolio web app
-├── web.config                           # Azure App Service (Windows IIS) MIME & default doc config
+├── staticwebapp.config.json             # Azure Static Web Apps clean-URL routing & MIME config
+├── web.config                           # Azure App Service (Windows IIS) MIME & rewrite config
 ├── README.md                            # Repository overview & deployment steps
 ├── MANUAL_UPGRADE_GUIDE.txt             # Step-by-step manual editing reference
 ├── FREE_SOFTWARE_DISTRIBUTION_GUIDE.md  # Guide for hosting free software/tools
