@@ -383,8 +383,8 @@
     .link-btn:hover { text-decoration: underline; }
 
     .tools-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width: 768px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width: 1080px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 640px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
     .tool-card { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
     .tool-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
     .tool-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
@@ -397,6 +397,13 @@
     .tool-actions .btn-dl { flex: 1 1 130px; }
     .tools-cta-banner { margin-top: 28px; padding: 22px 24px; border-radius: var(--radius-lg); background: var(--bg-surface); border: 1px solid rgba(56, 189, 248, 0.32); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
     .sha-code { display: block; margin-top: 6px; padding: 10px 12px; border-radius: 9px; background: var(--bg-input); border: 1px solid var(--border-subtle); font-family: var(--font-mono); font-size: 0.76rem; word-break: break-all; color: var(--accent-sky); }
+    .tools-more-wrap { margin-top: 20px; }
+    .tools-more-trigger { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 13px 18px; border-radius: 13px; background: var(--bg-surface); border: 1px solid var(--border-strong); color: var(--text-primary); font-size: 0.88rem; font-weight: 700; transition: border-color var(--transition), background var(--transition), transform var(--transition); }
+    .tools-more-trigger:hover { border-color: var(--accent-sky); background: var(--badge-blue-bg); color: var(--badge-blue-text); }
+    .tools-more-chevron { display: inline-flex; align-items: center; transition: transform 0.25s ease; }
+    .tools-more-trigger[aria-expanded="true"] .tools-more-chevron { transform: rotate(180deg); }
+    .tools-more-panel { display: none; margin-top: 20px; }
+    .tools-more-panel.open { display: block; animation: modalIn 0.22s ease-out; }
 
     /* =========================================================
        9. SMART FREELANCE & HIRING HUB ("HIRE ME")
@@ -977,7 +984,21 @@
           <button type="button" class="filter-tab" data-tool-filter="business">Business Apps</button>
         </div>
 
-        <div class="tools-grid" id="tools-grid"></div>
+        <div id="tools-catalog-wrap">
+          <div class="tools-grid" id="tools-grid"></div>
+
+          <div id="tools-more-wrap" class="tools-more-wrap" style="display:none;">
+            <button type="button" id="tools-more-toggle" class="tools-more-trigger" aria-expanded="false" aria-controls="tools-more-panel">
+              <span id="tools-more-label">Show More Tools &amp; Software</span>
+              <span class="tools-more-chevron" aria-hidden="true">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+              </span>
+            </button>
+            <div id="tools-more-panel" class="tools-more-panel">
+              <div class="tools-grid" id="tools-more-grid"></div>
+            </div>
+          </div>
+        </div>
 
         <div class="tools-cta-banner">
           <div>
@@ -1880,8 +1901,8 @@
           var fallback = document.getElementById('about-profile-fallback');
           if (!img || !fallback) return;
 
-          if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.self === window.top && img.getAttribute('src') === 'images/profile.jpg') {
-            img.setAttribute('src', '/images/profile.jpg');
+          if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && window.self === window.top && img.getAttribute('src') === 'images/profile.png') {
+            img.setAttribute('src', '/images/profile.png');
           }
 
           function showFallback() { img.style.display = 'none'; fallback.style.display = 'flex'; }
@@ -2103,12 +2124,21 @@
         }
 
         function initFreeToolsHub() {
+          var toolsCatalogWrap = document.getElementById('tools-catalog-wrap');
           var toolsGrid = document.getElementById('tools-grid');
+          var toolsMoreWrap = document.getElementById('tools-more-wrap');
+          var toolsMoreToggle = document.getElementById('tools-more-toggle');
+          var toolsMoreLabel = document.getElementById('tools-more-label');
+          var toolsMorePanel = document.getElementById('tools-more-panel');
+          var toolsMoreGrid = document.getElementById('tools-more-grid');
           var filterWrap = document.getElementById('tools-filter-tabs');
           var customReqBtn = document.getElementById('tools-request-custom-btn');
           if (!toolsGrid) return;
 
+          var VISIBLE_TOOLS_LIMIT = 6; // 2 rows x 3 columns visible by default
           var activeToolObj = null;
+          var currentFilter = 'all';
+          var isMoreOpen = false;
 
           function findToolById(id) {
             for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) {
@@ -2196,41 +2226,86 @@
             openModal('tool-modal');
           }
 
-          function renderTools(filterCat) {
-            toolsGrid.innerHTML = '';
-            for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) {
-              var tool = FREE_TOOLS_CATALOG[i];
-              if (filterCat !== 'all' && tool.category !== filterCat) continue;
-
-              var card = document.createElement('article');
-              card.className = 'card tool-card';
-              card.innerHTML = [
-                '<div>',
-                  '<div class="tool-top">',
-                    '<span class="case-badge">' + tool.categoryLabel + '</span>',
-                    '<div class="tool-badges">',
-                      '<span class="tool-free-pill">FREE</span>',
-                      '<span class="tool-ver-pill">' + tool.version + '</span>',
-                    '</div>',
-                  '</div>',
-                  '<h3 class="tool-title">' + tool.name + '</h3>',
-                  '<p class="tool-desc">' + tool.shortDesc + '</p>',
-                  '<div class="tool-meta-bar">',
-                    '<span><strong>Size:</strong> ' + tool.size + '</span>',
-                    '<span><strong>License:</strong> ' + tool.license + '</span>',
+          function createToolCard(tool) {
+            var card = document.createElement('article');
+            card.className = 'card tool-card';
+            card.innerHTML = [
+              '<div>',
+                '<div class="tool-top">',
+                  '<span class="case-badge">' + tool.categoryLabel + '</span>',
+                  '<div class="tool-badges">',
+                    '<span class="tool-free-pill">FREE</span>',
+                    '<span class="tool-ver-pill">' + tool.version + '</span>',
                   '</div>',
                 '</div>',
-                '<div class="tool-actions">',
-                  '<button type="button" class="btn btn-emerald btn-sm btn-dl js-tool-download" data-tool-id="' + tool.id + '">',
-                    '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
-                    '<span>Download Free</span>',
-                  '</button>',
-                  '<button type="button" class="btn btn-secondary btn-sm js-tool-details" data-tool-id="' + tool.id + '">Details</button>',
-                  '<button type="button" class="btn btn-subtle btn-sm js-tool-sha" data-tool-id="' + tool.id + '" title="Copy SHA-256 Checksum">SHA-256</button>',
-                '</div>'
-              ].join('');
-              toolsGrid.appendChild(card);
+                '<h3 class="tool-title">' + tool.name + '</h3>',
+                '<p class="tool-desc">' + tool.shortDesc + '</p>',
+                '<div class="tool-meta-bar">',
+                  '<span><strong>Size:</strong> ' + tool.size + '</span>',
+                  '<span><strong>License:</strong> ' + tool.license + '</span>',
+                '</div>',
+              '</div>',
+              '<div class="tool-actions">',
+                '<button type="button" class="btn btn-emerald btn-sm btn-dl js-tool-download" data-tool-id="' + tool.id + '">',
+                  '<svg class="icon icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+                  '<span>Download Free</span>',
+                '</button>',
+                '<button type="button" class="btn btn-secondary btn-sm js-tool-details" data-tool-id="' + tool.id + '">Details</button>',
+                '<button type="button" class="btn btn-subtle btn-sm js-tool-sha" data-tool-id="' + tool.id + '" title="Copy SHA-256 Checksum">SHA-256</button>',
+              '</div>'
+            ].join('');
+            return card;
+          }
+
+          function syncMoreDropdown(extraCount) {
+            if (!toolsMoreWrap || !toolsMoreToggle || !toolsMorePanel || !toolsMoreLabel) return;
+            if (extraCount > 0) {
+              toolsMoreWrap.style.display = 'block';
+              toolsMorePanel.classList.toggle('open', isMoreOpen);
+              toolsMoreToggle.setAttribute('aria-expanded', isMoreOpen ? 'true' : 'false');
+              toolsMoreLabel.textContent = isMoreOpen
+                ? 'Hide Additional Tools (' + extraCount + ')'
+                : 'Show More Tools & Software (+' + extraCount + ' more)';
+            } else {
+              toolsMoreWrap.style.display = 'none';
+              isMoreOpen = false;
+              toolsMorePanel.classList.remove('open');
+              toolsMoreToggle.setAttribute('aria-expanded', 'false');
             }
+          }
+
+          function renderTools(filterCat, preserveOpen) {
+            currentFilter = filterCat || 'all';
+            if (!preserveOpen) isMoreOpen = false;
+
+            var matched = [];
+            for (var i = 0; i < FREE_TOOLS_CATALOG.length; i++) {
+              var tool = FREE_TOOLS_CATALOG[i];
+              if (currentFilter !== 'all' && tool.category !== currentFilter) continue;
+              matched.push(tool);
+            }
+
+            toolsGrid.innerHTML = '';
+            if (toolsMoreGrid) toolsMoreGrid.innerHTML = '';
+
+            for (var j = 0; j < matched.length; j++) {
+              var card = createToolCard(matched[j]);
+              if (j < VISIBLE_TOOLS_LIMIT || !toolsMoreGrid) {
+                toolsGrid.appendChild(card);
+              } else {
+                toolsMoreGrid.appendChild(card);
+              }
+            }
+
+            syncMoreDropdown(Math.max(0, matched.length - VISIBLE_TOOLS_LIMIT));
+          }
+
+          if (toolsMoreToggle) {
+            toolsMoreToggle.addEventListener('click', function () {
+              isMoreOpen = !isMoreOpen;
+              var extraCount = toolsMoreGrid ? toolsMoreGrid.children.length : 0;
+              syncMoreDropdown(extraCount);
+            });
           }
 
           if (filterWrap) {
@@ -2240,11 +2315,12 @@
               var filterVal = tab.getAttribute('data-tool-filter') || 'all';
               var allTabs = filterWrap.querySelectorAll('.filter-tab');
               for (var i = 0; i < allTabs.length; i++) allTabs[i].classList.toggle('active', allTabs[i] === tab);
-              renderTools(filterVal);
+              renderTools(filterVal, false);
             });
           }
 
-          toolsGrid.addEventListener('click', function (e) {
+          var delegateTarget = toolsCatalogWrap || toolsGrid;
+          delegateTarget.addEventListener('click', function (e) {
             var dlBtn = e.target.closest('.js-tool-download');
             if (dlBtn) { handleToolDownload(findToolById(dlBtn.getAttribute('data-tool-id'))); return; }
             var detBtn = e.target.closest('.js-tool-details');
@@ -2261,7 +2337,7 @@
           document.getElementById('tool-modal-custom-btn').addEventListener('click', function () { prefillCustomToolInquiry(activeToolObj ? activeToolObj.name : ''); });
           if (customReqBtn) customReqBtn.addEventListener('click', function () { prefillCustomToolInquiry(''); });
 
-          renderTools('all');
+          renderTools('all', false);
         }
 
         function initContactForm() {
