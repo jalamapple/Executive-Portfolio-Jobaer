@@ -3076,6 +3076,7 @@
           <button type="button" class="filter-tab" data-tool-filter="security">Security &amp; Audit</button>
           <button type="button" class="filter-tab" data-tool-filter="automation">Automation</button>
           <button type="button" class="filter-tab" data-tool-filter="utility">Windows Utility</button>
+          <button type="button" class="filter-tab" data-tool-filter="network">Network Tools</button>
         </div>
 
         <!-- Dynamically rendered from FREE_TOOLS_CATALOG in script -->
@@ -3266,7 +3267,7 @@
               <div class="about-avatar-wrap">
                 <img
                   id="about-profile-photo"
-                  src="images/profile.png"
+                  src="images/profile.jpg"
                   alt="S M Jobaer Alam — Microsoft 365 & Cloud Engineer | Microsoft Security Specialist"
                   class="about-avatar-img"
                   loading="lazy"
@@ -3952,6 +3953,48 @@
           sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
           fileName: 'Windows-SysAdmin-Toolbox-v1.4.0.zip',
           downloadUrl: '/downloads/Windows-SysAdmin-Toolbox-v1.4.0.zip',
+          isLiveFile: false
+        },
+        {
+          id: 'mrtg-by-jobaer',
+          name: 'MRTG by Jobaer',
+          version: 'v1.0.0',
+          category: 'network',
+          categoryLabel: 'Network Tools',
+          license: 'Freeware',
+          size: '4.2 MB (.zip)',
+          requirements: 'Windows 10 / 11 / Server • SNMP v1/v2c Enabled Router or Switch',
+          shortDesc: 'Streamlined Multi Router Traffic Grapher (MRTG) deployment & monitoring tool for tracking live router, firewall, and switch interface bandwidth utilization.',
+          features: [
+            'Quick-setup SNMP polling for FortiGate, MikroTik, Cisco, and enterprise switches/routers.',
+            'Generates daily, weekly, monthly, and yearly inbound/outbound traffic graphs automatically.',
+            'Lightweight footprint designed for branch WAN links, ISP monitoring, and NOC dashboards.'
+          ],
+          usage: 'Extract ZIP -> Configure target IP & SNMP community in config.ini -> Run MRTG-by-Jobaer.exe',
+          sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
+          fileName: 'MRTG-by-Jobaer-v1.0.0.zip',
+          downloadUrl: '/downloads/MRTG-by-Jobaer-v1.0.0.zip',
+          isLiveFile: false
+        },
+        {
+          id: 'speed-monitoring-du-by-jobaer',
+          name: 'Speed Monitoring DU by Jobaer',
+          version: 'v1.0.0',
+          category: 'network',
+          categoryLabel: 'Network Tools',
+          license: 'Freeware',
+          size: '2.1 MB (.zip)',
+          requirements: 'Windows 10 / 11 (64-bit) • Lightweight Taskbar Utility',
+          shortDesc: 'Compact, always-visible Windows taskbar utility displaying real-time Download (D:) and Upload (U:) internet speed with minimal CPU and memory usage.',
+          features: [
+            'Displays live Download (D:) and Upload (U:) throughput directly in the Windows taskbar.',
+            'Auto-detects active Ethernet, Wi-Fi, and VPN network adapters with dynamic B/s, KB/s, and MB/s scaling.',
+            'Portable and lightweight with optional start-with-Windows support and zero telemetry.'
+          ],
+          usage: 'Extract ZIP -> Run Speed-Monitoring-DU-by-Jobaer.exe -> Pin or dock to Windows Taskbar',
+          sha256: 'REPLACE-WITH-REAL-SHA256-FROM-GET-FILEHASH-POWERSHELL',
+          fileName: 'Speed-Monitoring-DU-by-Jobaer-v1.0.0.zip',
+          downloadUrl: '/downloads/Speed-Monitoring-DU-by-Jobaer-v1.0.0.zip',
           isLiveFile: false
         }
       ];
