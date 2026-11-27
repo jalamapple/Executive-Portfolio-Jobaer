@@ -598,6 +598,25 @@
         document.body.removeChild(a);
       }
 
+      function openSaveLocationFallbackModal(resolvedUrl, fileName) {
+        var modal = document.getElementById('save-location-modal');
+        var nameEl = document.getElementById('save-loc-filename');
+        var linkEl = document.getElementById('save-loc-direct-link');
+        if (!modal || !linkEl) {
+          triggerDirectZipDownload(resolvedUrl, fileName);
+          showToast('Downloading ' + fileName + '...');
+          return;
+        }
+        if (nameEl) nameEl.textContent = fileName;
+        linkEl.href = resolvedUrl;
+        linkEl.setAttribute('download', fileName);
+        linkEl.onclick = function () {
+          setTimeout(function () { closeModal('save-location-modal'); }, 250);
+          showToast('Downloading ' + fileName + '...');
+        };
+        openModal('save-location-modal');
+      }
+
       function handleToolDownload(tool) {
         if (!tool) return;
         if (tool.isLiveFile && tool.downloadUrl) {
@@ -605,23 +624,47 @@
           if ((window.location.protocol === 'http:' || window.location.protocol === 'https:') && resolvedUrl.indexOf('http') !== 0 && resolvedUrl.charAt(0) !== '/') {
             resolvedUrl = '/' + resolvedUrl;
           }
-          if (window.location.protocol === 'file:') {
-            triggerDirectZipDownload(resolvedUrl, tool.fileName);
-            showToast('Downloading ' + tool.fileName + '...');
+
+          if (typeof window.showSaveFilePicker === 'function') {
+            window.showSaveFilePicker({
+              suggestedName: tool.fileName,
+              types: [
+                {
+                  description: 'ZIP Archive',
+                  accept: { 'application/zip': ['.zip'] }
+                }
+              ]
+            }).then(function (fileHandle) {
+              showToast('Downloading ' + tool.fileName + ' (' + tool.version + ')...');
+              return fetch(resolvedUrl, { cache: 'no-store' }).then(function (res) {
+                if (!res.ok) {
+                  throw new Error('HTTP_' + res.status);
+                }
+                return res.blob().then(function (blob) {
+                  return fileHandle.createWritable().then(function (writable) {
+                    return writable.write(blob).then(function () {
+                      return writable.close();
+                    });
+                  });
+                });
+              }).then(function () {
+                showToast('Saved ' + tool.fileName + ' to your chosen location!');
+              });
+            }).catch(function (err) {
+              if (err && err.name === 'AbortError') {
+                showToast('Save cancelled.');
+                return;
+              }
+              if (err && String(err.message || '').indexOf('HTTP_') === 0) {
+                showToast('File not uploaded yet: add ' + tool.downloadUrl + ' to your GitHub repo.');
+                return;
+              }
+              openSaveLocationFallbackModal(resolvedUrl, tool.fileName);
+            });
             return;
           }
-          showToast('Preparing download: ' + tool.fileName + '...');
-          fetch(resolvedUrl, { method: 'HEAD', cache: 'no-store' }).then(function (res) {
-            if (res.ok) {
-              triggerDirectZipDownload(resolvedUrl, tool.fileName);
-              showToast('Downloading ' + tool.fileName + ' (' + tool.version + ')');
-            } else {
-              showToast('File not uploaded yet: add ' + tool.downloadUrl + ' to your GitHub repo.');
-            }
-          }).catch(function () {
-            triggerDirectZipDownload(resolvedUrl, tool.fileName);
-            showToast('Starting free download: ' + tool.fileName);
-          });
+
+          openSaveLocationFallbackModal(resolvedUrl, tool.fileName);
         }
       }
 
