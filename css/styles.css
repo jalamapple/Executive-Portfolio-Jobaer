@@ -346,6 +346,8 @@ html[data-theme="light"] .tools-dropdown-chevron { color: var(--accent-blue); }
 .about-profile-role { margin: 4px 0 10px; font-size: 0.84rem; font-weight: 600; color: var(--accent-sky); line-height: 1.4; text-align: left; }
 html[data-theme="light"] .about-profile-role { color: var(--accent-blue); }
 .about-profile-meta { display: flex; flex-wrap: wrap; gap: 6px; }
+.about-profile-cta-note { margin: 0; padding: 11px 14px; border-radius: 11px; background: var(--bg-surface-alt); border: 1px solid var(--border-subtle); border-left: 3px solid var(--accent-sky); font-size: 0.83rem; font-weight: 500; line-height: 1.5; color: var(--text-secondary); text-align: left; }
+html[data-theme="light"] .about-profile-cta-note { border-left-color: var(--accent-blue); }
 .about-profile-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding-top: 16px; border-top: 1px solid var(--border-subtle); }
 .about-stat-box { padding: 10px 8px; border-radius: 10px; background: var(--bg-surface-alt); border: 1px solid var(--border-subtle); text-align: center; }
 .about-stat-val { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); line-height: 1.2; }
