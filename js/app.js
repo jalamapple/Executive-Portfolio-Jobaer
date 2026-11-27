@@ -374,10 +374,10 @@
       function updateCleanUrl(sectionId, push) {
         if (!canRewriteUrl) return;
         try {
-          var targetPath = '/' + sectionId;
+          var targetPath = (!sectionId || sectionId === 'top') ? '/' : ('/' + sectionId);
           if (window.location.pathname !== targetPath || window.location.hash) {
-            if (push) window.history.pushState({ section: sectionId }, '', targetPath);
-            else window.history.replaceState({ section: sectionId }, '', targetPath);
+            if (push) window.history.pushState({ section: sectionId || 'top' }, '', targetPath);
+            else window.history.replaceState({ section: sectionId || 'top' }, '', targetPath);
           }
         } catch (err) {}
       }
